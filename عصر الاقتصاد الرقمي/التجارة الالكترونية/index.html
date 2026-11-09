@@ -11,49 +11,80 @@
 :root{--p:#0f4c5c;--s:#1b7f79;--acc:#e36414;--crim:#b5485d;--bg:#f8fafc;--card:#fff;--tx:#1e293b;--sheet:#fff9f5}
 body.dark{--bg:#0f172a;--card:#1e293b;--tx:#f1f5f9;--sheet:#1e293b}
 body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden}
+select,input,textarea,table,canvas{max-width:100%;box-sizing:border-box}
 body.big{font-size:1.18rem}
-.hero{background:linear-gradient(135deg,#0b2545,#0f4c5c 50%,#1b7f79);color:#fff;padding:1.5rem 0;border-bottom:5px solid var(--acc)}
-.quote{background:rgba(255,255,255,.12);border-right:4px solid #fbbf24;padding:.6rem 1rem;border-radius:10px;font-size:.9rem;margin-top:.7rem}
-.nav-wrap{background:var(--card);box-shadow:0 4px 15px rgba(0,0,0,.06);position:sticky;top:0;z-index:1020;padding:.5rem 0}
-.nav-wrap .nav-link{color:var(--tx);font-weight:700;border-radius:10px;font-size:.9rem;margin:.1rem;transition:.2s}
+.hero{background:linear-gradient(135deg,#0b2545,#0f4c5c 50%,#1b7f79);color:#fff;padding:1.25rem 0;border-bottom:5px solid var(--acc)}
+.quote{background:rgba(255,255,255,.12);border-right:4px solid #fbbf24;padding:.55rem .9rem;border-radius:10px;font-size:.88rem;margin-top:.6rem}
+
+/* Mobile-First Sticky Navigation */
+.nav-wrap{background:var(--card);box-shadow:0 4px 15px rgba(0,0,0,.06);position:sticky;top:0;z-index:1020;padding:.45rem 0}
+.nav-wrap .nav{flex-wrap:nowrap;overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; gap:4px; padding-bottom:2px}
+.nav-wrap .nav::-webkit-scrollbar{display:none}
+.nav-wrap .nav-link{color:var(--tx);font-weight:700;border-radius:10px;font-size:.86rem;white-space:nowrap;padding:.5rem .85rem;transition:.2s}
 .nav-wrap .nav-link.active{background:linear-gradient(135deg,var(--p),var(--s));color:#fff}
+
 .panel{display:none}.panel.active{display:block;animation:fi .3s}
 @keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
-.cc{background:var(--card);border-radius:16px;border:1px solid rgba(148,163,184,.25);box-shadow:0 6px 20px rgba(0,0,0,.05);padding:1.4rem;margin-bottom:1.4rem}
+.cc{background:var(--card);border-radius:16px;border:1px solid rgba(148,163,184,.25);box-shadow:0 6px 20px rgba(0,0,0,.05);padding:1.25rem;margin-bottom:1.25rem}
 
-/* Professional 3D Simulation Viewer */
-#wrap3d{position:relative;height:490px;background:radial-gradient(circle at 50% 35%,#1e293b,#060a12);border-radius:16px;overflow:hidden;border:2px solid #334155;box-shadow:inset 0 0 40px rgba(0,0,0,.7)}
+/* ================= MOBILE-FRIENDLY 3D VIEWER & STORYBOARD ================= */
+.sim-mode-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+@media(max-width:768px){.sim-mode-tabs{grid-template-columns:repeat(2,1fr)}}
+.mb{background:var(--card);color:var(--tx);border:2px solid #cbd5e1;padding:10px 8px;border-radius:12px;font-size:.83rem;font-weight:800;text-align:center;transition:.2s;display:flex;flex-direction:column;align-items:center;gap:4px}
+.mb i{font-size:1.2rem}
+.mb.active,.mb:hover{background:linear-gradient(135deg,#0284c7,#0d9488);color:#fff;border-color:#0284c7;box-shadow:0 4px 12px rgba(2,132,199,.25)}
+
+/* Clean Teacher Banner OUTSIDE the 3D Canvas (Never blocks mobile screen!) */
+.sim-story-banner{background:linear-gradient(135deg,#0f172a,#1e293b);color:#f8fafc;border-radius:14px;padding:12px 16px;margin-bottom:10px;border-right:5px solid #38bdf8}
+#wrap3d{position:relative;height:340px;background:radial-gradient(circle at 50% 35%,#1e293b,#060a12);border-radius:16px;overflow:hidden;border:2px solid #334155;touch-action:pan-y}
+@media(max-width:576px){#wrap3d{height:270px}}
 #c3d{width:100%;height:100%;display:block;cursor:grab}
 #c3d:active{cursor:grabbing}
-.ov{position:absolute;top:12px;right:12px;background:rgba(15,23,42,.9);backdrop-filter:blur(8px);color:#f8fafc;padding:12px 16px;border-radius:12px;border-right:4px solid #38bdf8;max-width:345px;font-size:.85rem;z-index:10;box-shadow:0 6px 20px rgba(0,0,0,.4)}
-.cam-bar{position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:6px;z-index:10}
-.cam-btn{background:rgba(15,23,42,.88);color:#f8fafc;border:1px solid #475569;border-radius:8px;padding:5px 11px;font-size:.78rem;font-weight:700;transition:.2s}
+.cam-bar-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;padding:8px 12px;background:rgba(148,163,184,.12);border-radius:12px}
+.cam-btn{background:var(--card);color:var(--tx);border:1px solid #94a3b8;border-radius:8px;padding:5px 10px;font-size:.78rem;font-weight:700}
 .cam-btn:hover{background:#f59e0b;color:#0f172a;border-color:#f59e0b}
-.ctl{position:absolute;bottom:12px;left:12px;right:12px;display:flex;flex-wrap:wrap;gap:7px;justify-content:center;z-index:10}
-.mb{background:rgba(15,23,42,.88);color:#e2e8f0;border:1px solid #475569;padding:7px 14px;border-radius:10px;font-size:.82rem;font-weight:700;transition:.2s}
-.mb.active,.mb:hover{background:linear-gradient(135deg,#0284c7,#0d9488);color:#fff;border-color:#38bdf8;transform:translateY(-2px)}
 
-/* Explainer Cards under 3D Viewer */
-.sim-exp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:12px}
-.sim-exp-item{background:rgba(15,76,92,.06);border-right:4px solid var(--s);border-radius:10px;padding:10px 12px;font-size:.84rem}
+/* Visual Story Cards under 3D Canvas */
+.sim-exp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:12px}
+.sim-exp-item{background:rgba(15,76,92,.06);border-right:4px solid var(--s);border-radius:12px;padding:11px 14px;font-size:.86rem;cursor:pointer;transition:.2s}
+.sim-exp-item:hover{transform:translateY(-2px);background:rgba(15,76,92,.12)}
 
-/* Upgraded Side-by-Side Comparison Simulator */
-.arena{border-radius:16px;padding:1.25rem;height:100%;position:relative;transition:.3s}
+/* ================= VISUAL JOURNEY SIMULATOR: OLD VS NEW ================= */
+.journey-stage-card{border-radius:16px;padding:1.1rem;border:2px solid #e2e8f0;background:var(--card);margin-bottom:1rem}
+.step-pills-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+@media(max-width:576px){.step-pills-bar{grid-template-columns:repeat(2,1fr)}}
+.step-tab-btn{border:2px solid #cbd5e1;background:var(--card);color:var(--tx);border-radius:10px;padding:8px 6px;font-weight:800;font-size:.82rem;text-align:center;transition:.2s}
+.step-tab-btn.active{background:var(--acc);color:#fff;border-color:var(--acc);transform:scale(1.02)}
+
+.arena{border-radius:16px;padding:1.15rem;height:100%;position:relative;transition:.3s}
 .trad{background:linear-gradient(180deg,#fffbeb,#fef3c7);border:2px solid #f59e0b;color:#451a03}
 .digi{background:linear-gradient(180deg,#f0f9ff,#e0f2fe);border:2px solid #0284c7;color:#0c4a6e}
-.stp{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;margin-bottom:8px;background:rgba(255,255,255,.82);font-weight:600;font-size:.88rem;transition:.25s;border:2px solid transparent;cursor:pointer}
-.stp-num{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0}
+.scene-Cartoon-box{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;border:2px solid rgba(0,0,0,.08);text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.04)}
+.scene-emoji-stage{font-size:2.3rem;margin-bottom:6px;display:flex;justify-content:center;align-items:center;gap:10px;min-height:54px}
+.stp{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;margin-bottom:7px;background:rgba(255,255,255,.85);font-weight:600;font-size:.86rem;transition:.25s;border:2px solid transparent;cursor:pointer}
+.stp-num{width:25px;height:25px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;flex-shrink:0}
 .trad .stp-num{background:#f59e0b;color:#fff}
 .digi .stp-num{background:#0284c7;color:#fff}
-.stp.on{transform:scale(1.02);border-color:var(--acc);background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.stp.on{border-color:var(--acc);background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.1)}
 .kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
-.kpi-box{background:rgba(255,255,255,.88);border-radius:10px;padding:8px 10px;border:1px solid rgba(0,0,0,.08)}
+@media(max-width:480px){.kpi-grid{grid-template-columns:1fr}}
+.kpi-box{background:rgba(255,255,255,.9);border-radius:10px;padding:8px 10px;border:1px solid rgba(0,0,0,.08)}
+
+/* ================= DEDICATED B2B VS B2C VISUAL SIMULATOR ================= */
+.b2-card{border-radius:16px;padding:1.2rem;height:100%;transition:.25s;cursor:pointer}
+.b2b-theme{background:linear-gradient(180deg,#eef2ff,#e0e7ff);border:2px solid #4f46e5;color:#1e1b4b}
+.b2c-theme{background:linear-gradient(180deg,#ecfdf5,#d1fae5);border:2px solid #10b981;color:#064e3b}
+.flow-diagram{display:flex;align-items:center;justify-content:space-around;background:#fff;border-radius:14px;padding:14px 8px;margin:12px 0;border:2px dashed rgba(0,0,0,.15);text-align:center}
+.flow-node{display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:800;font-size:.84rem}
+.flow-node .icon-circle{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+.flow-arrow{display:flex;flex-direction:column;align-items:center;font-size:.75rem;font-weight:700;color:#475569}
+.flow-arrow i{font-size:1.3rem;margin:2px 0}
 
 /* Reading Sheet & Dictionary */
-.sheet{background:var(--sheet);border-right:6px solid var(--crim);border-radius:14px;padding:1.5rem;font-family:'Amiri',serif;font-size:1.4rem;line-height:2.2}
-.pb{padding:.6rem 1rem;border-radius:10px;margin-bottom:.8rem;border-right:3px solid transparent;transition:.2s}
+.sheet{background:var(--sheet);border-right:6px solid var(--crim);border-radius:14px;padding:1.3rem;font-family:'Amiri',serif;font-size:1.38rem;line-height:2.2}
+.pb{padding:.6rem .9rem;border-radius:10px;margin-bottom:.8rem;border-right:3px solid transparent;transition:.2s}
 .pb:hover{background:rgba(181,72,93,.08);border-right-color:var(--crim)}
-.ptag{font-family:'Cairo';font-size:.75rem;background:var(--crim);color:#fff;padding:2px 9px;border-radius:20px;margin-left:8px;cursor:pointer}
+.ptag{font-family:'Cairo';font-size:.75rem;background:var(--crim);color:#fff;padding:2px 9px;border-radius:20px;margin-left:8px;cursor:pointer;display:inline-block}
 .vw{color:#c9184a;font-weight:700;background:rgba(201,24,74,.1);padding:0 5px;border-radius:6px;border-bottom:2px dashed #c9184a;cursor:pointer;display:inline-block;line-height:1.4}
 .vw.ex{color:#0f766e;background:rgba(15,118,110,.1);border-bottom-color:#0f766e}
 .vw:hover,.vw.sel-w{background:#c9184a;color:#fff}
@@ -71,7 +102,7 @@ body.big{font-size:1.18rem}
 .qcard{border:2px solid #e2e8f0;border-radius:14px;padding:1rem;margin-bottom:1rem;background:var(--card)}
 .ans{display:none}.ans.show{display:block}
 .score{width:130px;height:130px;border-radius:50%;border:8px solid #16a34a;background:#f0fdf4;color:#15803d;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:auto}
-#toast{position:fixed;bottom:20px;left:20px;z-index:2050;display:none}
+#toast{position:fixed;bottom:16px;left:16px;right:16px;max-width:420px;z-index:2050;display:none}
 </style>
 </head>
 <body>
@@ -85,8 +116,8 @@ body.big{font-size:1.18rem}
 <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">الدَّرسُ الثّالثُ: أقرأُ بطلاقةٍ وفَهْمٍ</span>
 <span class="badge bg-info text-dark px-3 py-2 rounded-pill">الصَّفُّ التّاسعُ الأساسيُّ</span>
 </div>
-<h1 class="fw-bold" style="font-size:2rem">التِّجارةُ الإلكترونيَّةُ (E-Commerce)</h1>
-<p class="mb-1 opacity-90">منصة تعليمية تفاعلية للمعلم والطالب: محاكاة ثلاثية الأبعاد مشروحة، مقارنة تفصيلية بين التجارة التقليدية والرقمية، النص الكامل (12 فقرة) مع القاموس، أنشطة الكتاب، واختبار محوسب.</p>
+<h1 class="fw-bold" style="font-size:1.85rem">التِّجارةُ الإلكترونيَّةُ (E-Commerce)</h1>
+<p class="mb-1 opacity-90 small">منصة تفاعلية متوافقة مع الهاتف والسبورة الذكية: محاكاة قصصية مبسطة للطلاب، مقارنة حية (التقليدي vs الرقمي)، توضيح بصري للفرق بين (B2B و B2C)، النص الكامل والقاموس، والاختبار المحوسب.</p>
 <div class="quote"><i class="fa-solid fa-quote-right text-warning ms-2"></i><strong>«المهمُّ ألّا نكونَ مستهلكينَ للتكنولوجيا، بل أنْ نكونَ رُوّادًا في صناعتِها ومؤثّرينَ في رسمِ مساراتِها».</strong>
 <span class="d-block small text-warning mt-1">— سموُّ الأميرِ الحسينِ بنِ عبدِ اللهِ الثّاني، وليُّ العهدِ (منتدى تواصل 2023م)</span></div>
 </div>
@@ -94,7 +125,7 @@ body.big{font-size:1.18rem}
 <div class="bg-dark bg-opacity-50 p-3 rounded-4 border border-light border-opacity-25">
 <div class="small fw-bold mb-2"><i class="fa-solid fa-chalkboard-user text-warning ms-1"></i> أدوات العرض الصفي:</div>
 <div class="d-flex flex-wrap gap-2">
-<button id="bBoard" class="btn btn-sm btn-warning fw-bold flex-grow-1"><i class="fa-solid fa-tv ms-1"></i> تكبير للسبورة</button>
+<button id="bBoard" class="btn btn-sm btn-warning fw-bold flex-grow-1"><i class="fa-solid fa-tv ms-1"></i> تكبير الخط</button>
 <button id="bDark" class="btn btn-sm btn-outline-light"><i class="fa-solid fa-moon ms-1"></i> ليلي</button>
 <button id="bPick" class="btn btn-sm btn-info fw-bold w-100"><i class="fa-solid fa-dice ms-1"></i> قرعة مشاركة طالب</button>
 </div></div></div>
@@ -102,168 +133,290 @@ body.big{font-size:1.18rem}
 </header>
 
 <nav class="nav-wrap"><div class="container">
-<ul class="nav nav-pills justify-content-center flex-wrap" id="tabs">
-<li><button class="nav-link active" data-t="s1"><i class="fa-solid fa-cube text-warning"></i> 1. المحاكاة والمقارنة</button></li>
-<li><button class="nav-link" data-t="s2"><i class="fa-solid fa-book-open-reader text-danger"></i> 2. النص والقاموس</button></li>
+<ul class="nav nav-pills justify-content-start justify-content-lg-center" id="tabs">
+<li><button class="nav-link active" data-t="s1"><i class="fa-solid fa-cube text-warning"></i> 1. المحاكاة والمقارنة </button></li>
+<li><button class="nav-link" data-t="s2"><i class="fa-solid fa-book-open-reader text-danger"></i> 2. النص والقاموس (48 معنى)</button></li>
 <li><button class="nav-link" data-t="s3"><i class="fa-solid fa-layer-group text-info"></i> 3. شرح الفقرات (12)</button></li>
-<li><button class="nav-link" data-t="s4"><i class="fa-solid fa-timeline text-success"></i> 4. التاريخ والأنماط والمعوقات</button></li>
+<li><button class="nav-link" data-t="s4"><i class="fa-solid fa-timeline text-success"></i> 4. خط الزمن والمعوقات</button></li>
 <li><button class="nav-link" data-t="s5"><i class="fa-solid fa-pen-to-square text-primary"></i> 5. أنشطة الكتاب</button></li>
 <li><button class="nav-link" data-t="s6"><i class="fa-solid fa-graduation-cap text-warning"></i> 6. الاختبار المحوسب</button></li>
 </ul></div></nav>
 
-<main class="container my-4">
+<main class="container my-3">
 
-<!-- ==================== SECTION 1: 3D LAB & COMPARISON SIMULATOR ==================== -->
+<!-- ==================== SECTION 1: STUDENT-FRIENDLY SIMULATORS ==================== -->
 <section id="s1" class="panel active">
-<div class="cc">
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+
+<!-- SIMULATOR 1: STEP-BY-STEP VISUAL COMPARISON (OLD MARKET VS E-COMMERCE) -->
+<div class="cc border-top border-4 border-primary">
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
 <div>
-<h4 class="fw-bold text-primary mb-1"><i class="fa-solid fa-cubes-stacked ms-2"></i>المعمل ثلاثي الأبعاد: محاكاة مفاهيم الدرس بصريًا</h4>
-<p class="small text-muted mb-0">اسحب المشهد بالفأرة أو اللمس لتدويره، واضغط على أي مجسم ثلاثي الأبعاد لسماع/قراءة شرحه، أو تنقل بين الأطوار الأربعة بالأسفل.</p>
+<span class="badge bg-primary mb-1"><i class="fa-solid fa-code-compare ms-1"></i> المحاكي التفاعلي الأول: الفكرة الأساسية للدرس (الفقرات 1، 2، 3، 4، 8)</span>
+<h4 class="fw-bold mb-0">كيف تحوّلت السوق من «مكانٍ ماديٍّ يُؤَمُّ (يُقصَدُ)» إلى «تجربةٍ ذكيةٍ تُعاشُ»؟</h4>
+</div>
+<div class="d-flex gap-2 flex-wrap">
+<button id="bRun" class="btn btn-sm btn-danger fw-bold px-3"><i class="fa-solid fa-play ms-1"></i> شغّل القصة المصوّرة تلقائيًا</button>
+<button id="bStepNext" class="btn btn-sm btn-outline-primary fw-bold"><i class="fa-solid fa-forward-step ms-1"></i> المرحلة التالية</button>
+</div>
+</div>
+
+<p class="small text-muted mb-2">اختر مثالًا من أمثلة الكتاب المدرسي، ثم تنقّل بين المراحل الأربع لترى بنفسك الفرق بين معاناة المشتري قديمًا وسهولة التجارة الإلكترونية اليوم:</p>
+
+<!-- Scenario Selector -->
+<select id="scen" class="form-select fw-bold mb-3 border-primary">
+<option value="0">📚 المثال الأول من الكتاب (فقرة 8 ص 63): باحث يريد الحصول على كتاب نادر</option>
+<option value="1">✈️ المثال الثاني من الكتاب (فقرة 6 ص 62 + س9): مسافر يريد حجز تذكرة سفره</option>
+<option value="2">🛍️ المثال الثالث من الكتاب (فقرة 2 و3 و7): مستهلك يشتري بضاعة ويدفع ثمنها</option>
+<option value="3">🏭 المثال الرابع من الكتاب (فقرة 8 و9): شركة تبحث عن موردين لبضائعها في العالم</option>
+</select>
+
+<!-- 4 Interactive Stage Buttons (Easy to tap on Mobile!) -->
+<div class="step-pills-bar" id="stageTabs">
+<button class="step-tab-btn active" data-st="0">المرحلة 1: الذهاب والوصول</button>
+<button class="step-tab-btn" data-st="1">المرحلة 2: البحث والتواصل</button>
+<button class="step-tab-btn" data-st="2">المرحلة 3: الدفع والوثائق</button>
+<button class="step-tab-btn" data-st="3">المرحلة 4: استلام السلعة والنتيجة</button>
+</div>
+
+<!-- Active Stage Visual Story Box (Explains clearly to 9th graders) -->
+<div class="row g-3 mb-3">
+<!-- Traditional Market Card -->
+<div class="col-lg-6">
+<div class="arena trad">
+<div class="d-flex justify-content-between align-items-center border-bottom border-warning pb-2 mb-2">
+<div>
+<span class="badge bg-warning text-dark">النَّمطُ التَّقليديُّ قديمًا</span>
+<h5 class="fw-bold mb-0 mt-1"><i class="fa-solid fa-store ms-1"></i> السّوقُ المادّيَّةُ (مكانٌ يُؤَمُّ / يُقصَدُ)</h5>
+</div>
+<span class="badge bg-danger">عناء ووقت طويل</span>
+</div>
+
+<!-- Cartoon Visual Stage for Traditional -->
+<div class="scene-Cartoon-box">
+<div class="scene-emoji-stage" id="tVisualEmoji">🚶‍♂️ ⬅️ 🛣️ ⬅️ 🏪</div>
+<h6 class="fw-bold text-danger mb-1" id="tVisualTitle">المرحلة 1: الخروج من البيت وعناء التنقل للأزقة</h6>
+<p class="small fw-semibold text-dark mb-0" id="tVisualDesc"></p>
+</div>
+
+<p class="small fw-bold mb-2 bg-white bg-opacity-75 p-2 rounded border border-warning" id="tQuote"></p>
+<div id="tSteps"></div>
+
+<div class="kpi-grid">
+<div class="kpi-box">
+<div class="d-flex justify-content-between small fw-bold mb-1"><span>عناء التنقل (مشقة السفر):</span><span class="text-danger" id="tEffortTxt">95%</span></div>
+<div class="progress" style="height:7px"><div class="progress-bar bg-danger" style="width:95%"></div></div>
+</div>
+<div class="kpi-box">
+<div class="d-flex justify-content-between small fw-bold mb-1"><span>المعاملات الورقية والنقد:</span><span class="text-danger" id="tPaperTxt">100%</span></div>
+<div class="progress" style="height:7px"><div class="progress-bar bg-warning" style="width:100%"></div></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Digital E-Commerce Card -->
+<div class="col-lg-6">
+<div class="arena digi">
+<div class="d-flex justify-content-between align-items-center border-bottom border-info pb-2 mb-2">
+<div>
+<span class="badge bg-primary">النَّمطُ الإلكترونيُّ حديثًا</span>
+<h5 class="fw-bold mb-0 mt-1"><i class="fa-solid fa-laptop-code ms-1"></i> الفضاءُ الرَّقميُّ (تجربةٌ ذكيَّةٌ تُعاشُ)</h5>
+</div>
+<span class="badge bg-success">بنقرة زر من المنزل</span>
+</div>
+
+<!-- Cartoon Visual Stage for Digital -->
+<div class="scene-Cartoon-box">
+<div class="scene-emoji-stage" id="dVisualEmoji">🏠 🧑‍💻 👆 💻 🌐</div>
+<h6 class="fw-bold text-primary mb-1" id="dVisualTitle">المرحلة 1: الإبحار في الفضاء الرقمي من المنزل</h6>
+<p class="small fw-semibold text-dark mb-0" id="dVisualDesc"></p>
+</div>
+
+<p class="small fw-bold mb-2 bg-white bg-opacity-75 p-2 rounded border border-info" id="dQuote"></p>
+<div id="dSteps"></div>
+
+<div class="kpi-grid">
+<div class="kpi-box">
+<div class="d-flex justify-content-between small fw-bold mb-1"><span>عناء التنقل والكلفة:</span><span class="text-success" id="dEffortTxt">5% (أقل الكلف)</span></div>
+<div class="progress" style="height:7px"><div class="progress-bar bg-success" style="width:10%"></div></div>
+</div>
+<div class="kpi-box">
+<div class="d-flex justify-content-between small fw-bold mb-1"><span>اتساع السوق (شتى العالم):</span><span class="text-primary" id="dScopeBarTxt">100% بلا حدود</span></div>
+<div class="progress" style="height:7px"><div class="progress-bar bg-primary" style="width:100%"></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Summary Table Comparing Old vs New -->
+<div class="table-responsive"><table class="table table-sm table-bordered text-center align-middle mb-0">
+<thead class="table-dark"><tr><th style="width:20%">وجه المقارنة</th><th style="width:40%">التجارة التقليدية قديمًا (السوق المادية)</th><th style="width:40%">التجارة الإلكترونية حديثًا (الفضاء الرقمي)</th></tr></thead>
+<tbody class="small fw-semibold">
+<tr><td class="fw-bold bg-light">1. المكان والنطاق</td><td>مكان مادي يُؤمّ (يُقصد) محصور في الأزقة (الطرق الضيقة) والساحات.</td><td class="text-success">فضاء رقمي فسيح (مساحة إلكترونية واسعة) ألغى القيود الجغرافية.</td></tr>
+<tr><td class="fw-bold bg-light">2. اللقاء والتواصل</td><td>تقوم على التقابل وجهًا لوجه، وتتعالى فيها نداءات البائعين وتتقاطع خطا المشترين.</td><td class="text-success">تواصل عبر المواقع الرقمية بين المنتج والمستهلك دون حاجة إلى اللقاء المباشر.</td></tr>
+<tr><td class="fw-bold bg-light">3. الإنجاز والدفع</td><td>تنقل جسدي بين السلع، ودفع نقدي، واعتماد على المعاملات الورقية.</td><td class="text-success">تُنجز بنقرة زر (ضغطة سريعة)، ودفع إلكتروني آمن، وخفض المعاملات الورقية.</td></tr>
+<tr><td class="fw-bold bg-light">4. أثرها على الباحث والمشتري</td><td>يضطر إلى السفر وعناء التنقل (مشقة وتعب السفر) بين المكتبات والأسواق.</td><td class="text-success">يبحر في الفضاء الرقمي وهو في منزله، وتُسلم السلع لعنوانه بأقل الكلف.</td></tr>
+</tbody></table></div>
+</div>
+
+
+<!-- SIMULATOR 2: DEDICATED VISUAL EXPLAINER FOR B2B VS B2C -->
+<div class="cc border-top border-4 border-success">
+<div class="mb-3">
+<span class="badge bg-success mb-1"><i class="fa-solid fa-diagram-project ms-1"></i> المحاكي التفاعلي الثاني: الفرق الواضح بين صورتي التعامل الإلكتروني (الفقرة 7 ص 63 + سؤال 9 ص 67)</span>
+<h4 class="fw-bold mb-1">كيف تفرّق بسهولة بين التَّعاملِ بينَ شَركتينِ (B2B) والتَّعاملِ بينَ شَركةٍ ومُستخدِمٍ (B2C)؟</h4>
+<p class="small text-muted mb-0">قاعدة ذهبية لطالب الصف التاسع: انظر إلى <strong>الطرف المشتري</strong>؛ فإذا كان المشتري <strong>شركة أو مصنعًا أو متجرًا</strong> فالنمط هو (شركة لشركة B2B)، وإذا كان المشتري <strong>فردًا عاديًا (مسافر، طالب، مستهلك يشتري لبيته)</strong> فالنمط هو (شركة لمستخدم B2C وهو الأكثر شيوعًا).</p>
+</div>
+
+<div class="row g-3 mb-3">
+<!-- B2B Visual Card -->
+<div class="col-lg-6">
+<div class="b2-card b2b-theme">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<span class="badge bg-primary fs-6">الصورة الأولى: B2B (Business to Business)</span>
+<span class="badge bg-dark">بين مؤسستين</span>
+</div>
+<h5 class="fw-bold">التَّعاملُ بينَ شَركتينِ</h5>
+<p class="small fw-semibold mb-2">نص الكتاب (ص 63): «التَّعاملُ بينَ شركتينِ تتبادلانِ السِّلعَ والخِدْماتِ عبرَ الشَّبكاتِ».</p>
+
+<!-- Visual Flow Diagram -->
+<div class="flow-diagram">
+<div class="flow-node">
+<div class="icon-circle" style="background:#4f46e5"><i class="fa-solid fa-laptop-code"></i></div>
+<span>شركة (أ): بائع</span>
+<small class="text-muted">شركة برمجيات</small>
+</div>
+<div class="flow-arrow">
+<span>تبادل سلع وخدمات ووثائق</span>
+<i class="fa-solid fa-left-right text-primary"></i>
+<span class="badge bg-primary">عبر الشبكات</span>
+</div>
+<div class="flow-node">
+<div class="icon-circle" style="background:#3730a3"><i class="fa-solid fa-industry"></i></div>
+<span>شركة (ب): مشتري</span>
+<small class="text-muted">مصنع أجهزة حاسوب</small>
+</div>
+</div>
+
+<div class="bg-white p-2 rounded-3 border small">
+<b class="text-primary d-block mb-1"><i class="fa-solid fa-circle-check ms-1"></i> كيف أعرفه في الامتحان؟</b>
+الطرفان <strong>شركتان أو مؤسستان</strong> (لا يوجد فرد يشتري لنفسه)، مثل:
+<ul class="mb-0 ps-3 mt-1">
+<li>تعاقد <strong>شركة تصنيع أجهزة الحاسوب</strong> مع <strong>شركة برمجيات</strong> عبر موقع إلكتروني لتزويدها بأنظمة تشغيل (سؤال 9/ب ص 67).</li>
+<li>تحويل الأموال وإرسال الوثائق إلكترونيًا <strong>من منظمة لأخرى</strong> (فقرة 7).</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- B2C Visual Card -->
+<div class="col-lg-6">
+<div class="b2-card b2c-theme">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<span class="badge bg-success fs-6">الصورة الثانية: B2C (Business to Consumer)</span>
+<span class="badge bg-warning text-dark fw-bold">الأكثر شيوعًا (انتشارًا) ⭐</span>
+</div>
+<h5 class="fw-bold">التَّعاملُ بينَ شَركةٍ ومُستخدِمٍ (مستهلك)</h5>
+<p class="small fw-semibold mb-2">نص الكتاب (ص 63): «والتَّعاملُ بينَ شركةٍ ومستخدمٍ، وهوَ الأكثرُ شيوعًا؛ إذْ يتمُّ الدَّفعُ بوسائلَ إلكترونيَّةٍ آمنةٍ، وتُسلَّمُ السِّلعُ إلى العنواناتِ المحدَّدةِ دونَ عناءِ التَّنقُّلِ أوِ الانتظارِ الطَّويلِ».</p>
+
+<!-- Visual Flow Diagram -->
+<div class="flow-diagram">
+<div class="flow-node">
+<div class="icon-circle" style="background:#059669"><i class="fa-solid fa-globe"></i></div>
+<span>شركة: متجر إلكتروني</span>
+<small class="text-muted">موقع طيران / مكتبة</small>
+</div>
+<div class="flow-arrow">
+<span>دفع إلكتروني آمن 💳</span>
+<i class="fa-solid fa-truck-fast text-success"></i>
+<span class="badge bg-success">توصيل لمنزل المشتري</span>
+</div>
+<div class="flow-node">
+<div class="icon-circle" style="background:#d97706"><i class="fa-solid fa-user-check"></i></div>
+<span>مستخدم: فرد مستهلك</span>
+<small class="text-muted">مسافر / طالب في منزله</small>
+</div>
+</div>
+
+<div class="bg-white p-2 rounded-3 border small">
+<b class="text-success d-block mb-1"><i class="fa-solid fa-circle-check ms-1"></i> كيف أعرفه في الامتحان؟</b>
+أحد الطرفين شركة والطرف الآخر <strong>شخص عادي (مستخدم/مستهلك)</strong>، مثل:
+<ul class="mb-0 ps-3 mt-1">
+<li>حجز <strong>مسافر</strong> تذكرة سفره عن طريق <strong>موقع إلكتروني</strong> (سؤال 9/أ ص 67).</li>
+<li>شراء <strong>باحث أو طالب</strong> كتابًا أو ملابس من متجر إلكتروني وتوصيلها لمنزله.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Interactive B2B vs B2C Classifier Activity -->
+<div class="p-3 rounded-4 bg-light border">
+<h6 class="fw-bold text-dark mb-2"><i class="fa-solid fa-gamepad text-primary ms-1"></i> تدريب تفاعلي فوري للطالب: اختر الحالة لترى تحليلها البصري (سؤال 9 ص 67 + أمثلة إضافية):</h6>
+<select id="b2bSel" class="form-select mb-2 fw-bold">
+<option value="0">أ- حجز مسافر تذكرة سفره عن طريق موقع إلكتروني (سؤال الكتاب 9/أ ص 67).</option>
+<option value="1">ب- تعاقد شركة تصنيع أجهزة الحاسوب مع شركة برمجيات عبر موقع إلكتروني لتزويدها بأنظمة تشغيل (سؤال الكتاب 9/ب ص 67).</option>
+<option value="2">ج- شراء طالب كتابًا نادرًا من متجر إلكتروني وهو في منزله وتوصيله لعنوانه.</option>
+<option value="3">د- بحث شركة تجارية عن موردين لبضائعها في شتى أنحاء العالم والتعاقد معهم عبر الشبكة.</option>
+</select>
+<div id="b2bRes" class="alert alert-success mb-0 py-2 small fw-bold"></div>
+</div>
+</div>
+
+
+<!-- SIMULATOR 3: MOBILE-OPTIMIZED 3D SCENE VIEWER -->
+<div class="cc">
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
+<div>
+<span class="badge bg-info text-dark mb-1"><i class="fa-solid fa-cube ms-1"></i> المحاكي التفاعلي الثالث: المجسمات ثلاثية الأبعاد (3D)</span>
+<h4 class="fw-bold text-primary mb-0">المعمل البصري ثلاثي الأبعاد: اختر الفكرة لتشاهد تمثيلها المجسّم</h4>
 </div>
 <div class="d-flex flex-wrap gap-2">
-<button id="bOrder" class="btn btn-success btn-sm fw-bold"><i class="fa-solid fa-bolt ms-1"></i> تنفيذ صفقة بنقرة زر</button>
-<button id="bBurst" class="btn btn-warning btn-sm fw-bold text-dark"><i class="fa-solid fa-boxes-packing ms-1"></i> إطلاق شحنة توريد</button>
-<button id="bRot" class="btn btn-outline-secondary btn-sm fw-bold">تدوير تلقائي: مفعل</button>
-</div></div>
+<button id="bOrder" class="btn btn-success btn-sm fw-bold"><i class="fa-solid fa-bolt ms-1"></i> أرسل طلبًا بنقرة زر 📦</button>
+<button id="bBurst" class="btn btn-warning btn-sm fw-bold text-dark"><i class="fa-solid fa-truck-fast ms-1"></i> شغّل سلسلة التوريد</button>
+</div>
+</div>
 
+<!-- Easy 2x2 / 4-col Mode Selector Buttons ABOVE the 3D Canvas -->
+<div class="sim-mode-tabs">
+<button class="mb active" data-m="compare"><i class="fa-solid fa-scale-balanced text-warning"></i><span>1. الأزقة قديمًا vs الشاشات اليوم</span></button>
+<button class="mb" data-m="b2b"><i class="fa-solid fa-building-shield text-info"></i><span>2. صورتا التعامل: B2B و B2C</span></button>
+<button class="mb" data-m="supply"><i class="fa-solid fa-boxes-packing text-success"></i><span>3. سلاسل التوريد (منتج ⬅ موزع ⬅ مستهلك)</span></button>
+<button class="mb" data-m="globe"><i class="fa-solid fa-earth-americas text-primary"></i><span>4. الفضاء الرقمي وإلغاء الحدود</span></button>
+</div>
+
+<!-- Clean Explanation Banner OUTSIDE Canvas (100% readable on mobile!) -->
+<div class="sim-story-banner">
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-1">
+<span class="badge bg-warning text-dark" id="simBadge">الطور التفاعلي 1 من 4</span>
+<span class="small text-info fw-bold">الطلبات المنجزة: <strong id="simN">142</strong> | <span id="simStatus">اضغط على أي مجسم داخل الشاشة لشرحه</span></span>
+</div>
+<h6 class="fw-bold text-warning mb-1" id="simT"></h6>
+<p class="mb-0 small opacity-90" id="simD"></p>
+</div>
+
+<!-- Uncluttered 3D Canvas -->
 <div id="wrap3d">
 <canvas id="c3d"></canvas>
+</div>
 
-<!-- Camera Angle Controls -->
-<div class="cam-bar">
+<!-- Camera & Rotation Controls Bar Below Canvas -->
+<div class="cam-bar-bottom">
+<div class="d-flex flex-wrap gap-1">
 <button class="cam-btn" id="camFront"><i class="fa-solid fa-eye ms-1"></i> منظور أمامي</button>
 <button class="cam-btn" id="camTop"><i class="fa-solid fa-satellite ms-1"></i> منظور علوي</button>
 <button class="cam-btn" id="camIn"><i class="fa-solid fa-magnifying-glass-plus ms-1"></i> تقريب +</button>
 <button class="cam-btn" id="camOut"><i class="fa-solid fa-magnifying-glass-minus ms-1"></i> تبعيد -</button>
 </div>
-
-<!-- Info Overlay -->
-<div class="ov">
-<span class="badge bg-info text-dark mb-1" id="simBadge">الطور التفاعلي 2 من 4</span>
-<h6 class="fw-bold text-warning mb-1" id="simT"></h6>
-<p class="mb-2 small" id="simD" style="line-height:1.6"></p>
-<div class="d-flex justify-content-between small text-info border-top border-secondary pt-1">
-<span>الصفقات المنجزة: <strong id="simN">142</strong></span>
-<span id="simStatus">انقر على المجسمات للشرح</span>
-</div>
+<button id="bRot" class="cam-btn">تدوير تلقائي: مفعل</button>
 </div>
 
-<!-- 4 Mode Switchers -->
-<div class="ctl">
-<button class="mb" data-m="globe"><i class="fa-solid fa-earth-americas ms-1"></i> 1. الفضاء الرقمي وإلغاء الحدود</button>
-<button class="mb active" data-m="compare"><i class="fa-solid fa-scale-balanced ms-1"></i> 2. السوق التقليدي (الأزقة) vs الرقمي (الشاشات)</button>
-<button class="mb" data-m="supply"><i class="fa-solid fa-truck-fast ms-1"></i> 3. سلاسل التوريد (منتج ⬅ موزع ⬅ مستهلك)</button>
-<button class="mb" data-m="b2b"><i class="fa-solid fa-building-shield ms-1"></i> 4. صورتا التعامل (B2B و B2C)</button>
-</div>
-</div>
-
-<!-- Dynamic Pedagogical Breakdown below 3D Canvas -->
+<!-- 4 Pedagogical Breakdown Cards under 3D Canvas -->
 <div class="sim-exp-grid" id="simExpGrid"></div>
 </div>
 
-<!-- UPGRADED COMPARISON SIMULATOR: TRADITIONAL VS DIGITAL TRADE -->
-<div class="cc border-top border-4 border-primary">
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
-<div>
-<span class="badge bg-primary mb-1">محاكاة تفاعلية خطوة بخطوة (الفقرات 2، 3، 4، 7، 8)</span>
-<h4 class="fw-bold mb-0">مختبر المقارنة الحية: السّوقُ التَّقليديَّةُ (مكانٌ يُؤَمُّ) ⟵ التِّجارةُ الرَّقميَّةُ (تجربةٌ ذكيَّةٌ تُعاشُ)</h4>
-</div>
-<div class="d-flex gap-2 flex-wrap align-items-center">
-<select id="scen" class="form-select form-select-sm fw-bold" style="min-width:280px">
-<option value="0">1. باحث يريد الحصول على كتاب نادر (الفقرة 8 - ص 63)</option>
-<option value="1">2. مسافر يريد حجز تذكرة سفره (الفقرة 6 - ص 62 + س9)</option>
-<option value="2">3. شركة تبحث عن موردين لبضائعها عالميًا (الفقرة 8 - ص 63)</option>
-<option value="3">4. مستهلك يشتري سلعة ويدفع ثمنها (الفقرات 2 و3 و7)</option>
-</select>
-<button id="bRun" class="btn btn-sm btn-danger fw-bold"><i class="fa-solid fa-play ms-1"></i> تشغيل المحاكاة المقارنة</button>
-<button id="bStepNext" class="btn btn-sm btn-outline-primary fw-bold"><i class="fa-solid fa-forward-step ms-1"></i> خطوة تالية يدويًا</button>
-</div></div>
-
-<!-- Scenario Context Banner -->
-<div class="alert alert-secondary py-2 px-3 small fw-bold mb-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
-<span id="scenGoal"></span>
-<span class="badge bg-dark" id="scenStepIndicator">اضغط «تشغيل المحاكاة» أو انقر على أي مرحلة لمقارنتها</span>
-</div>
-
-<div class="row g-4 mb-3">
-<!-- Traditional Side -->
-<div class="col-lg-6"><div class="arena trad">
-<div class="d-flex justify-content-between align-items-center border-bottom border-warning pb-2 mb-2">
-<div>
-<span class="badge bg-warning text-dark">النَّمطُ التَّقليديُّ قديمًا</span>
-<h5 class="fw-bold mb-0 mt-1"><i class="fa-solid fa-store ms-1"></i> السّوقُ المادّيَّةُ: «مكانٌ يُؤَمُّ (يُقصَدُ)»</h5>
-</div>
-<span class="badge bg-danger" id="tBadge">جهد ووقت مرتفع</span>
-</div>
-<p class="small fw-bold mb-2" id="tQuote"></p>
-<div id="tSteps"></div>
-
-<div class="kpi-grid">
-<div class="kpi-box">
-<div class="d-flex justify-content-between small fw-bold mb-1"><span>عناء التنقل والسفر:</span><span class="text-danger" id="tEffortTxt">90%</span></div>
-<div class="progress" style="height:7px"><div id="tEffortBar" class="progress-bar bg-danger" style="width:90%"></div></div>
-</div>
-<div class="kpi-box">
-<div class="d-flex justify-content-between small fw-bold mb-1"><span>الاعتماد على الورق والنقد:</span><span class="text-danger" id="tPaperTxt">95%</span></div>
-<div class="progress" style="height:7px"><div id="tPaperBar" class="progress-bar bg-warning" style="width:95%"></div></div>
-</div>
-<div class="kpi-box">
-<div class="small text-muted">نطاق السوق (الحدود):</div>
-<div class="fw-bold small text-dark" id="tScopeTxt">محصور في الأزقة والساحات</div>
-</div>
-<div class="kpi-box">
-<div class="small text-muted">طريقة التواصل والدفع:</div>
-<div class="fw-bold small text-dark" id="tPayTxt">تقابل وجهًا لوجه + نقد ورقي</div>
-</div>
-</div>
-</div></div>
-
-<!-- Digital Side -->
-<div class="col-lg-6"><div class="arena digi">
-<div class="d-flex justify-content-between align-items-center border-bottom border-info pb-2 mb-2">
-<div>
-<span class="badge bg-primary">النَّمطُ الإلكترونيُّ حديثًا</span>
-<h5 class="fw-bold mb-0 mt-1"><i class="fa-solid fa-laptop-code ms-1"></i> الفضاءُ الرَّقميُّ: «تجربةٌ ذكيَّةٌ تُعاشُ»</h5>
-</div>
-<span class="badge bg-success" id="dBadge">بنقرة زر (ضغطة سريعة)</span>
-</div>
-<p class="small fw-bold mb-2" id="dQuote"></p>
-<div id="dSteps"></div>
-
-<div class="kpi-grid">
-<div class="kpi-box">
-<div class="d-flex justify-content-between small fw-bold mb-1"><span>عناء التنقل والكلفة:</span><span class="text-success" id="dEffortTxt">10% (أقل الكلف)</span></div>
-<div class="progress" style="height:7px"><div id="dEffortBar" class="progress-bar bg-success" style="width:10%"></div></div>
-</div>
-<div class="kpi-box">
-<div class="d-flex justify-content-between small fw-bold mb-1"><span>اتساع النطاق العالمي:</span><span class="text-primary" id="dScopeBarTxt">100% (شتى العالم)</span></div>
-<div class="progress" style="height:7px"><div id="dScopeBar" class="progress-bar bg-primary" style="width:100%"></div></div>
-</div>
-<div class="kpi-box">
-<div class="small text-muted">نطاق السوق (الحدود):</div>
-<div class="fw-bold small text-dark" id="dScopeTxt">فضاء رقمي فسيح بلا قيود جغرافية</div>
-</div>
-<div class="kpi-box">
-<div class="small text-muted">طريقة التواصل والدفع:</div>
-<div class="fw-bold small text-dark" id="dPayTxt">دون لقاء مباشر + دفع إلكتروني آمن</div>
-</div>
-</div>
-</div></div>
-</div>
-
-<!-- Detailed Analytical Comparison Table -->
-<div class="table-responsive"><table class="table table-sm table-bordered text-center align-middle mb-0">
-<thead class="table-dark"><tr><th style="width:18%">معيار المقارنة</th><th style="width:41%">التجارة التقليدية قديمًا (السوق المادية)</th><th style="width:41%">التجارة الإلكترونية حديثًا (الفضاء الرقمي)</th></tr></thead>
-<tbody class="small fw-semibold">
-<tr><td class="fw-bold bg-light">1. مفهوم السوق والمكان</td><td>مكان مادي يُؤمّ (يُقصد) محصور في حدود الأزقة (الطرق الضيقة) والساحات.</td><td class="text-success">فضاء رقمي فسيح (مساحة إلكترونية واسعة) وتجربة ذكية تُعاش عبر الشاشات النابضة.</td></tr>
-<tr><td class="fw-bold bg-light">2. طبيعة اللقاء والتواصل</td><td>تقوم على التقابل وجهًا لوجه، وتتعالى فيها نداءات البائعين وتتقاطع خطا المشترين.</td><td class="text-success">تواصل عبر المواقع الرقمية المتنوعة بين المنتج والمستهلك دون حاجة إلى اللقاء المباشر.</td></tr>
-<tr><td class="fw-bold bg-light">3. إتمام المعاملات والدفع</td><td>تنقل جسدي بين السلع، ودفع نقدي، واعتماد كبير على المعاملات الورقية.</td><td class="text-success">تُنجز بنقرة زر (ضغطة واحدة سريعة)، ودفع بوسائل إلكترونية آمنة، وخفض المعاملات الورقية.</td></tr>
-<tr><td class="fw-bold bg-light">4. النطاق الجغرافي والكلفة</td><td>مقيدة بالحدود الجغرافية، وارتفاع كلفة السفر والتنقل والبحث عن البضائع.</td><td class="text-success">إلغاء القيود الجغرافية، والوصول للموردين والمستهلكين في شتى أنحاء العالم بأقل الكلف.</td></tr>
-<tr><td class="fw-bold bg-light">5. سلاسل التوريد ودور المستهلك</td><td>احتمالية التأخير وسوء التخزين (التخزين الخاطئ)، ودور المستهلك يقتصر على الشراء.</td><td class="text-success">تحسين كفاية سلاسل التوريد، والمستهلك شريك فاعل (مساهم حقيقي) بآرائه وتقييماته.</td></tr>
-</tbody></table></div>
-</div>
-
+<!-- Pre-reading & General Atmosphere -->
 <div class="row g-4">
 <div class="col-lg-5"><div class="cc h-100 border-top border-4 border-info">
 <h5 class="fw-bold"><i class="fa-solid fa-lightbulb text-warning ms-2"></i>أستعدُّ للقراءةِ وجَوُّ النَّصِّ</h5>
@@ -319,37 +472,26 @@ body.big{font-size:1.18rem}
 <div class="btn-group"><button id="pPrev" class="btn btn-outline-primary btn-sm fw-bold">السابقة</button><button id="pNext" class="btn btn-primary btn-sm fw-bold">التالية</button></div></div>
 <div class="row g-4">
 <div class="col-lg-4" id="pNav"></div>
-<div class="col-lg-8"><div id="pDet" class="p-4 rounded-4 border"></div></div>
+<div class="col-lg-8"><div id="pDet" class="p-3 p-md-4 rounded-4 border"></div></div>
 </div></div>
 </section>
 
-<!-- ==================== SECTION 4: TIMELINE, B2B/B2C & OBSTACLES ==================== -->
+<!-- ==================== SECTION 4: TIMELINE & OBSTACLES ==================== -->
 <section id="s4" class="panel">
 <div class="cc">
-<h4 class="fw-bold text-primary"><i class="fa-solid fa-clock-rotate-left text-warning ms-2"></i>1. خطُّ الزَّمنِ التفاعليّ (سؤال 6 ص 67)</h4>
+<h4 class="fw-bold text-primary"><i class="fa-solid fa-clock-rotate-left text-warning ms-2"></i>1. خطُّ الزَّمنِ التفاعليّ لنشأةِ وتطوّرِ التجارةِ الإلكترونيّةِ (سؤال 6 ص 67)</h4>
+<p class="small text-muted mb-2">اضغط على أي عام لعرض الحدث الأبرز الذي شهدته التجارة الإلكترونية:</p>
 <div class="row g-3 my-1" id="tlRow"></div>
 <div id="tlDet" class="p-3 rounded-4 mt-3 border-end border-5 border-warning" style="background:#fffbeb;color:#1e293b"></div>
 </div>
-<div class="row g-4">
-<div class="col-lg-6"><div class="cc h-100">
-<h5 class="fw-bold text-success">2. صورتا التعامل الإلكتروني (B2B و B2C)</h5>
-<div class="row g-2 mb-3">
-<div class="col-6"><div class="p-2 rounded border border-primary h-100"><span class="badge bg-primary">B2B</span><h6 class="fw-bold mt-1">بين شركتين</h6><p class="small mb-0">تتبادلان السلع والخدمات عبر الشبكات.</p></div></div>
-<div class="col-6"><div class="p-2 rounded border border-success h-100"><span class="badge bg-success">B2C - الأكثر شيوعًا</span><h6 class="fw-bold mt-1">بين شركة ومستخدم</h6><p class="small mb-0">دفع إلكتروني آمن وتسليم للعنوان دون عناء التنقل.</p></div></div></div>
-<h6 class="fw-bold">اختبر فهمك (سؤال 9 ص 67):</h6>
-<select id="b2bSel" class="form-select mb-2 fw-semibold">
-<option value="0">أ- مسافر يحجز تذكرة عبر موقع شركة الطيران.</option>
-<option value="1">ب- شركة أجهزة حاسوب تتعاقد مع شركة برمجيات لتزويدها بأنظمة تشغيل.</option>
-<option value="2">ج- طالب يشتري كتابًا نادرًا من متجر إلكتروني ويصله لمنزله.</option>
-<option value="3">د- سلسلة متاجر تطلب شحنة هواتف من المصنع عبر منصة توريد.</option>
-</select>
-<div id="b2bRes" class="alert alert-info mb-0 py-2 small fw-bold"></div>
-</div></div>
-<div class="col-lg-6"><div class="cc h-100">
-<div class="d-flex justify-content-between"><h5 class="fw-bold text-danger">3. تصنيف المعوّقات (سؤال 10 ص 67)</h5><button id="bObsReset" class="btn btn-sm btn-outline-secondary">إعادة</button></div>
-<p class="small text-muted">صنّف كل معوّق: تقني (يرتبط بالأجهزة والشبكات) أو غير تقني.</p>
+
+<div class="cc">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<h5 class="fw-bold text-danger mb-0"><i class="fa-solid fa-shield-halved ms-2"></i>2. لعبة تصنيف المعوّقات إلى تقنية وغير تقنية (سؤال 10 ص 67)</h5>
+<button id="bObsReset" class="btn btn-sm btn-outline-secondary">إعادة الضبط</button>
+</div>
+<p class="small text-muted mb-3"><strong>قاعدة التصنيف (فقرة 10 ص 64):</strong> المعوقات <strong>التقنية</strong> ترتبط بالأجهزة والشبكات والبرمجيات وكلفة خدماتها، بينما المعوقات <strong>غير التقنية</strong> تتعلق بنفسية المشتري وخوفه على الخصوصية وعدم ثقته بالبائع الافتراضي.</p>
 <div id="obs"></div>
-</div></div>
 </div>
 </section>
 
@@ -439,7 +581,7 @@ body.big{font-size:1.18rem}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(window._tTimer);window._tTimer=setTimeout(()=>e.style.display='none',2600)}
+function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(window._tTimer);window._tTimer=setTimeout(()=>e.style.display='none',2800)}
 
 /* ---------- DATA: 48 VOCAB ITEMS & 12 EXACT BOOK PARAGRAPHS ---------- */
 const V={
@@ -513,7 +655,6 @@ const V={
 شاهدة:['شاهِدةً','دَليلًا.','ش هـ د',0]
 };
 
-// Full verbatim 12 paragraphs from the textbook (pp. 61-64)
 const P=[
 {t:'تغيّر مفهوم التجارة في العصر الحديث',pg:'ص 61-62',x:'في زمنٍ {تتسارع|تتسارعُ} فيهِ خُطا المعرفةِ، و{تتقلص|تتقلَّصُ} فيهِ المسافاتُ، لم تعدِ التِّجارةُ تبادلًا للسِّلعِ فحسْبُ، بلْ غدَتْ صورةً حيَّةً لتحوُّلِ الإنسانِ في تعاملِهِ معَ العالمِ من حولِهِ؛ فقدْ أعادَ التَّقدُّمُ التِّكنولوجيُّ {تشكيل|تشكيلَ} مفهومِ كُلٍّ منَ السّوقِ، والبيعِ والشِّراءِ، والتَّواصلِ الاقتصاديِّ، حتّى أصبحَ الفضاءُ الرَّقميُّ ميدانًا جديدًا للحياةِ {المعاصرة|المعاصرةِ}. فكيفَ تحوَّلتِ السّوقُ من مكانٍ مادّيٍّ إلى تجربةٍ افتراضيَّةٍ؟ وما الدَّلالاتُ الحضاريَّةُ لهذا التَّحوُّلِ العميقِ في أنماطِ التَّبادلِ الإنسانيِّ؟',
  m:'تغيّر مفهوم التجارة في العصر الحديث من سوق مادية إلى فضاء رقمي يعكس تطورًا حضاريًا.',
@@ -591,55 +732,178 @@ document.addEventListener('click',e=>{
 $$('#rootsTbl .ans').forEach(x=>x.classList.add('show-r'));
 const st=document.createElement('style');st.textContent='#rootsTbl .ans{display:table-cell}#rootsTbl .ans:not(.show-r){visibility:hidden}';document.head.appendChild(st);
 
-/* ---------- PROFESSIONAL SELF-CONTAINED 3D PERSPECTIVE ENGINE ---------- */
-const MODES={
-globe:{
- badge:'الطور التفاعلي 1 من 4 (الفقرتان 1 و 8)',
- title:'الفضاء الرقمي الفسيح وإلغاء القيود الجغرافية',
- desc:'تتقلص المسافات وتُلغى الحدود المكانية؛ فالشركات تبحث عن الموردين وتصل للمستهلكين والباحثين في شتى أنحاء العالم بأقل الكلف.',
- cards:[
-  ['🌍 تقليص المسافات','تحول العالم بفضل شبكة الإنترنت إلى ميدان رقمي تتسارع فيه خطا المعرفة.'],
-  ['🧭 إلغاء القيود الجغرافية','البحث عن الموردين والمستهلكين في شتى (مختلف) أنحاء العالم بسهولة.'],
-  ['📚 الوصول إلى المعرفة','الباحث عن كتاب نادر يبحر في الفضاء الرقمي ويحصل عليه وهو في منزله.'],
-  ['🌱 خفض المعاملات الورقية','تُنشأ المعلومات وتُخزن وتُسترجع إلكترونيًا بكلفة أقل وجهد أيسر.']
- ]
+/* ---------- SIMULATOR 1: VISUAL STORY COMPARISON (OLD VS NEW) ---------- */
+const SC=[
+{
+ tq:'«كانَ الباحثُ عن كتابٍ نادرٍ مضطرًّا إلى السَّفرِ أوِ التَّنقُّلِ بينَ المكتباتِ»',
+ dq:'«بلْ يكفيهِ أنْ يُبحرَ في الفضاءِ الرَّقميِّ ليحصلَ على ما يريدُ وهوَ في منزلِهِ»',
+ stages:[
+  {tE:'🧳 🚌 🛣️ 🏛️',tT:'المرحلة 1: السفر وعناء التنقل',tD:'يضطر الباحث للسفر من مدينته والتنقل جسديًا بين المكتبات البعيدة بحثًا عن الكتاب النادر.',
+   dE:'🏠 🛋️ 💻 🌐',dT:'المرحلة 1: الإبحار الرقمي من المنزل',dD:'يجلس الباحث في منزله ويفتح شبكة الإنترنت (الفضاء الرقمي الفسيح) دون أي سفر أو تعب.'},
+  {tE:'📚 🔍 😓 ⏳',tT:'المرحلة 2: البحث اليدوي الطويل',tD:'يبحث يدويًا بين آلاف الرفوف الورقية ويسأل البائعين وجهًا لوجه، وقد لا يجد النسخة.',
+   dE:'⌨️ 🔎 ⚡ 📖',dT:'المرحلة 2: البحث الفوري في شتى العالم',dD:'يكتب اسم الكتاب النادر في المواقع الرقمية المتنوعة فيجده في مكتبات العالم خلال ثوانٍ.'},
+  {tE:'💵 🧾 ✍️ 📁',tT:'المرحلة 3: الدفع النقدي والورقي',tD:'يدفع نقودًا ورقية ويستلم فاتورة ورقية مع كلفة سفر عالية.',
+   dE:'👆 💳 🔒 ✅',dT:'المرحلة 3: الدفع الآمن بنقرة زر',dD:'يُنجز المعاملة بنقرة زر (ضغطة واحدة سريعة) عبر وسائل دفع إلكترونية آمنة بلا ورق.'},
+  {tE:'🎒 🚶‍♂️ 🏠 😮‍💨',tT:'المرحلة 4: العودة بعد جهد ووقت',tD:'يعود حاملًا الكتاب الورقي بعد ضياع يوم كامل في السفر والتنقل.',
+   dE:'📥 📦 🏠 😊',dT:'المرحلة 4: الحصول على الكتاب في المنزل',dD:'يحصل على النسخة الإلكترونية فورًا أو يصله الكتاب إلى عنوان منزله بأقل الكلف.'}
+ ],
+ te:'95% (سفر وتنقل)',tp:'100% (ورقي ونقدي)',de:'5% (من المنزل)',ds:'100% (مكتبات العالم)'
 },
+{
+ tq:'«كانتِ المعاملاتُ التِّجاريَّةُ في الماضي تقومُ على التَّقابلِ وجهًا لوجهٍ»',
+ dq:'«فباتَ حجزُ تذاكرِ السَّفرِ... يتمُّ في مواقعَ إلكترونيَّةٍ منظَّمةٍ»',
+ stages:[
+  {tE:'🚗 🚦 🏢 🚶',tT:'المرحلة 1: الذهاب لمكتب السياحة',tD:'يخرج المسافر في الازدحام للذهاب إلى مكاتب الطيران في السوق المادي.',
+   dE:'📱 🏠 🌐 ✈️',dT:'المرحلة 1: فتح موقع الطيران المنظم',dD:'يدخل المسافر من هاتفه أو حاسوبه إلى موقع شركة الطيران الإلكتروني (تعامل B2C).'},
+  {tE:'👥 ⏳ 🗣️ 🧑‍💼',tT:'المرحلة 2: الانتظار والمقابلة وجهًا لوجه',tD:'يقف في طابور الانتظار الطويل ليقابل الموظف وجهًا لوجه ويسأله عن المواعيد.',
+   dE:'🗓️ 📊 ⚡ 🔍',dT:'المرحلة 2: مقارنة الرحلات دون لقاء مباشر',dD:'يقارن جميع مواعيد وأسعار الرحلات بنفسه بسهولة دون حاجة إلى اللقاء المباشر.'},
+  {tE:'💵 📄 🖨️ ✒️',tT:'المرحلة 3: الدفع النقدي والتذكرة الورقية',tD:'يدفع الثمن نقدًا وينتظر طباعة التذكرة والوثائق الورقية.',
+   dE:'💳 🔐 👆 📲',dT:'المرحلة 3: الدفع الإلكتروني بنقرة زر',dD:'يدفع إلكترونيًا بأمان بنقرة زر وتُحفظ بياناته ووثائقه إلكترونيًا.'},
+  {tE:'🎫 😰 📁 🚕',tT:'المرحلة 4: خشية ضياع الورق وعناء العودة',tD:'يعود بالتذكرة الورقية التي قد تتعرض للضياع أو التلف.',
+   dE:'📲 ✅ 😊 🛫',dT:'المرحلة 4: تذكرة رقمية محفوظة دائمًا',dD:'تصل التذكرة الإلكترونية لهاتفه فورًا وتُسترجع بكلفة أقل وجهد أيسر.'}
+ ],
+ te:'85% (حضور وانتظار)',tp:'90% (تذاكر ورقية)',de:'10% (حجز فوري)',ds:'100% (مواقع منظمة)'
+},
+{
+ tq:'«تتعالى فيها نداءاتُ البائعينَ، وتتقاطعُ على أرضِها خُطا المشترينَ في الأزقَّةِ»',
+ dq:'«غدَتِ الشّاشاتُ واجهاتٍ نابضةً بالحياةِ تُنجَزُ فيها المعاملاتُ بنقرةِ زِرٍّ»',
+ stages:[
+  {tE:'🚶‍♂️ 🏘️ 🐝 📢',tT:'المرحلة 1: دخول الأزقة المزدحمة كخلية نحل',tD:'يقصد المشتري السوق المادي (مكان يُؤمّ) وسط الأزقة الضيقة وضجيج نداءات البائعين.',
+   dE:'📱 ✨ 🖥️ 🛒',dT:'المرحلة 1: تصفح الشاشات النابضة بالحياة',dD:'يفتح المشتري شاشة هاتفه النابضة بالحياة ليتجول في فضاء رقمي فسيح (تجربة تُعاش).'},
+  {tE:'👣 🔄 👕 🤝',tT:'المرحلة 2: تقاطع خطا المشترين والمساومة',tD:'يتنقل جسديًا بين السلع وتتقاطع خطاه مع الناس ويقابل البائع وجهًا لوجه.',
+   dE:'⭐ 💬 👀 🔍',dT:'المرحلة 2: قراءة تقييمات المستهلكين',dD:'يطّلع على مواصفات السلعة وآراء وتقييمات المشترين السابقين بسهولة.'},
+  {tE:'💵 🧾 👛 ⏳',tT:'المرحلة 3: عدّ النقود والفواتير الورقية',tD:'يدفع الثمن نقدًا باليد ويستلم فاتورة ورقية.',
+   dE:'👆 💳 🔒 ⚡',dT:'المرحلة 3: الشراء والدفع بنقرة زر',dD:'يختار السلعة ويدفع ثمنها بوسائل إلكترونية آمنة بنقرة زر واحدة.'},
+  {tE:'🛍️ 🏋️‍♂️ 🥵 🏠',tT:'المرحلة 4: حمل البضائع وعناء التنقل',tD:'يحمل الأكياس الثقيلة ويعود لمنزله متعبًا.',
+   dE:'🚚 📦 🏠 ⭐',dT:'المرحلة 4: التوصيل للعنوان وتقييم المنتج',dD:'تُسلّم السلعة لعنوان منزله دون عناء التنقل، ويكتب تقييمه كشريك فاعل في التطوير.'}
+ ],
+ te:'90% (ازدحام وتعب)',tp:'95% (نقد وورق)',de:'8% (راحة في المنزل)',ds:'100% (توصيل للعنوان)'
+},
+{
+ tq:'«كانتِ السّوقُ محصورةً في حدودِ المكانِ والقيودِ الجغرافيَّةِ»',
+ dq:'«صارتِ الشَّركاتُ قادرةً على البحثِ عنِ المورِّدينَ في شتّى أنحاءِ العالمِ بأقلِّ الكُلَفِ»',
+ stages:[
+  {tE:'🗺️ 🚧 🏢 ✈️',tT:'المرحلة 1: قيود جغرافية وسفر مكلف',tD:'تقتصر الشركة على الموردين المحليين أو تضطر لسفر وفودها بتكاليف باهظة.',
+   dE:'🌐 🤝 🏭 💻',dT:'المرحلة 1: البحث في شتى أنحاء العالم (B2B)',dD:'تبحث الشركة عبر الشبكات عن أفضل الموردين في شتى أنحاء العالم بأقل الكلف.'},
+  {tE:'📝 ✉️ 🐢 📂',tT:'المرحلة 2: بطء المراسلات والوثائق الورقية',tD:'ترسل العقود والوثائق الورقية عبر البريد التقليدي مما يستهلك أسابيع.',
+   dE:'📄 ⚡ 🔄 💻',dT:'المرحلة 2: تبادل الوثائق والبيانات إلكترونيًا',dD:'تُرسل الوثائق والمعلومات وبيانات المخزون إلكترونيًا في ثوانٍ.'},
+  {tE:'📦 ❌ 🏚️ 📉',tT:'المرحلة 3: مشكلات التأخير وسوء التخزين',tD:'بسبب ضعف التواصل يحدث تأخير وسوء تخزين (تخزين خاطئ للبضائع) وخسائر مالية.',
+   dE:'🏭 ➡️ 🚚 ➡️ 🏠',dT:'المرحلة 3: سلاسل توريد ذكية عالية الكفاية',dD:'ربط متكامل بين المنتجين والموزعين والمستهلكين يمنع التأخير وسوء التخزين.'},
+  {tE:'😟 💸 📉 🔒',tT:'المرحلة 4: ضعف المنافسة وفقدان الثقة',tD:'ترتفع الكلف وتقل المنافسة وقد يفقد المستهلك ثقته بالمنتج المتأخر.',
+   dE:'🏆 🚀 ⭐ 📈',dT:'المرحلة 4: تعزيز المنافسة وجودة المنتجات',dD:'تتعزز المنافسة وتتحسن جودة المنتجات ويتسارع الابتكار.'}
+ ],
+ te:'92% (كلف ومخاطر تخزين)',tp:'95% (عقود ورقية)',de:'10% (سلاسل توريد ذكية)',ds:'100% (سوق عالمي)'
+}
+];
+
+let curStep=0,runT;
+function highlightStep(idx){
+ curStep=idx;
+ const s=SC[$('#scen').value];
+ const st=s.stages[idx];
+ $$('#stageTabs .step-tab-btn').forEach((b,j)=>b.classList.toggle('active',j===idx));
+ $$('#tSteps .stp').forEach((e,j)=>e.classList.toggle('on',j===idx));
+ $$('#dSteps .stp').forEach((e,j)=>e.classList.toggle('on',j===idx));
+
+ $('#tVisualEmoji').textContent=st.tE;
+ $('#tVisualTitle').textContent=st.tT;
+ $('#tVisualDesc').textContent=st.tD;
+ $('#dVisualEmoji').textContent=st.dE;
+ $('#dVisualTitle').textContent=st.dT;
+ $('#dVisualDesc').textContent=st.dD;
+}
+
+function drawSteps(){
+ const s=SC[$('#scen').value];
+ $('#tQuote').textContent='نص الكتاب: '+s.tq;
+ $('#dQuote').textContent='نص الكتاب: '+s.dq;
+ $('#tEffortTxt').textContent=s.te;
+ $('#tPaperTxt').textContent=s.tp;
+ $('#dEffortTxt').textContent=s.de;
+ $('#dScopeBarTxt').textContent=s.ds;
+
+ $('#tSteps').innerHTML=s.stages.map((x,i)=>`<div class="stp" data-st="${i}"><span class="stp-num">${i+1}</span><span><b>${x.tT.split(':')[1]||x.tT}:</b> ${x.tD}</span></div>`).join('');
+ $('#dSteps').innerHTML=s.stages.map((x,i)=>`<div class="stp" data-st="${i}"><span class="stp-num">${i+1}</span><span><b>${x.dT.split(':')[1]||x.dT}:</b> ${x.dD}</span></div>`).join('');
+ $$('#tSteps .stp, #dSteps .stp, #stageTabs .step-tab-btn').forEach(el=>el.onclick=()=>{clearInterval(runT);highlightStep(+el.dataset.st)});
+ highlightStep(0);
+}
+
+function runSim(){
+ clearInterval(runT);
+ drawSteps();
+ let i=0;
+ highlightStep(0);
+ runT=setInterval(()=>{
+  i++;
+  if(i<4)highlightStep(i);
+  else{clearInterval(runT);toast('اكتملت القصة المصوّرة! لاحظ كيف اختصرت التجارة الإلكترونية الوقت والجهد.')}
+ },1400);
+}
+
+$('#scen').onchange=()=>{clearInterval(runT);drawSteps()};
+$('#bRun').onclick=runSim;
+$('#bStepNext').onclick=()=>{clearInterval(runT);highlightStep((curStep+1)%4)};
+drawSteps();
+
+/* ---------- SIMULATOR 2: B2B VS B2C INTERACTIVE CLASSIFIER ---------- */
+const B2=[
+ '✔ الصورة الثانية: تعامل بين شركة ومستخدم (B2C) — لأن المسافر فرد (مستهلك) يشتري خدمة السفر لنفسه مباشرة من موقع شركة الطيران.',
+ '✔ الصورة الأولى: تعامل بين شركتين (B2B) — لأن الطرفين مؤسستان (شركة تصنيع الحواسيب وشركة البرمجيات) تتبادلان السلع والخدمات عبر الشبكات.',
+ '✔ الصورة الثانية: تعامل بين شركة ومستخدم (B2C) — لأن الطالب مستهلك فرد يشتري الكتاب لنفسه ويصله لعنوان منزله دون عناء التنقل.',
+ '✔ الصورة الأولى: تعامل بين شركتين (B2B) — لأن الشركة التجارية والموردين العالميين مؤسسات تتبادل البضائع بكميات تجارية عبر الشبكات.'
+];
+$('#b2bSel').onchange=()=>$('#b2bRes').textContent=B2[$('#b2bSel').value];
+$('#b2bSel').onchange();
+
+/* ---------- SIMULATOR 3: MOBILE-FRIENDLY 3D VIEWER ---------- */
+const MODES={
 compare:{
- badge:'الطور التفاعلي 2 من 4 (الفقرتان 2 و 3)',
- title:'مقارنة الأسواق قديمًا (الأزقة) بالتجارة الرقمية (الشاشات)',
- desc:'على اليمين: الأسواق قديمًا في الأزقة الضيقة تعج بالحركة كخلية نحل وتتقاطع فيها خطا المشترين. على اليسار: الشاشات النابضة بالحياة تنجز المعاملات بنقرة زر.',
+ badge:'المشهد 1 من 4 (الفقرتان 2 و 3)',
+ title:'السوق التقليدي قديمًا (الأزقة) مقابل الفضاء الرقمي (الشاشات)',
+ desc:'على اليسار: الأزقة الضيقة تزدحم بالمشترين كخلية نحل. على اليمين: الشاشات النابضة بالحياة تنجز المعاملات بنقرة زر وتوصل الطرود للمنزل.',
  cards:[
   ['🏪 السوق قديمًا (مكانٌ يُؤَمُّ)','طرق ضيقة (أزقة) وساحات مادية تتعالى فيها نداءات البائعين وتلتقي خطا المشترين.'],
-  ['🐝 كخلية نحل لا تهدأ','تشبيه تمثيلي يبرز الازدحام والنشاط والحركة الجسدية المباشرة وجهًا لوجه.'],
-  ['💻 اليوم (تجربةٌ ذكيَّةٌ تُعاشُ)','الشاشات واجهات نابضة بالحياة (ممتلئة بالحيوية) تُنجز فيها المعاملات بنقرة زر.'],
-  ['⚡ دون لقاء مباشر','تواصل فوري بين المنتج والمستهلك عبر المواقع الرقمية دون عناء التنقل.']
- ]
-},
-supply:{
- badge:'الطور التفاعلي 3 من 4 (الفقرة 9 + سؤال 4/ج)',
- title:'تحسين كفاية سلاسل التوريد ودور المستهلك الشريك',
- desc:'نظام متكامل يربط المنتجين والموزعين والمستهلكين، ويسهل الوصول إلى بياناتهم بسرعة، مما يحد من مشكلات التأخير وسوء التخزين.',
- cards:[
-  ['🏭 1. المُنتِجونَ','الجهات أو الأشخاص الذين يقومون بإنتاج السلع والخدمات وتوفير بياناتها.'],
-  ['🚚 2. الموزِّعونَ','الوسيط المسؤول عن نقل البضائع وتوزيعها للأسواق دون تأخير أو سوء تخزين.'],
-  ['🏠 3. المستهلكونَ','الأفراد أو الجهات المستفيدة من البضائع والخدمات بعد وصولها لعناوينهم.'],
-  ['⭐ شريك فاعل في التطوير','يسهم المستهلك بآرائه وتقييماته الرقمية في تحسين السلع وتحديثها.']
+  ['🐝 كخلية نحل لا تهدأ','تشبيه يوضح شدة الازدحام والحركة الجسدية والتقابل وجهًا لوجه.'],
+  ['💻 اليوم (تجربةٌ ذكيَّةٌ تُعاشُ)','الشاشات واجهات نابضة بالحياة تُنجز فيها المعاملات بنقرة زر (ضغطة سريعة).'],
+  ['📦 توصيل دون عناء التنقل','تنتقل الطرود من المتجر الرقمي إلى منزل المشتري دون مشقة السفر.']
  ]
 },
 b2b:{
- badge:'الطور التفاعلي 4 من 4 (الفقرة 7 + سؤال 9)',
- title:'صورتا التعامل الإلكتروني الرئيستان (B2B و B2C)',
- desc:'الصورة الأولى: التعامل بين شركتين تتبادلان السلع والخدمات عبر الشبكات. الصورة الثانية: بين شركة ومستخدم وهي الأكثر شيوعًا وانتشارًا.',
+ badge:'المشهد 2 من 4 (الفقرة 7 + سؤال 9)',
+ title:'الفرق المجسّم بين صورتي التعامل: (B2B شركتان) و (B2C شركة ومستخدم)',
+ desc:'البرجان الأزرقان يمثلان شركتين تتبادلان الأنظمة والسلع (B2B)، بينما المتجر الأخضر يوصل الطرود لمنزل المستهلك الفرد (B2C الأكثر شيوعًا).',
  cards:[
-  ['🏢 بين شركتين (B2B)','مثل تعاقد شركة تصنيع حواسيب مع شركة برمجيات لتزويدها بأنظمة تشغيل.'],
-  ['🛒 بين شركة ومستخدم (B2C)','الأكثر شيوعًا (انتشارًا)؛ مثل حجز مسافر تذكرة سفره عبر موقع إلكتروني.'],
-  ['🔒 وسائل دفع آمنة','يتم الدفع إلكترونيًا بأمان (تحويل إلكتروني دون نقد ورقي).'],
-  ['📦 توصيل للعنوان المحدد','تُسلم السلع إلى العنوانات المحددة دون عناء التنقل (مشقة السفر) أو الانتظار.']
+  ['🏢 بين شركتين (B2B)','برجان يرمزان لشركتين (مثل مصنع حواسيب وشركة برمجيات) تتبادلان السلع عبر الشبكات.'],
+  ['🏠 بين شركة ومستخدم (B2C)','متجر إلكتروني يوصل السلعة لمنزل المستهلك الفرد، وهو النمط الأكثر شيوعًا وانتشارًا.'],
+  ['💳 دفع إلكتروني آمن','يتم تحويل الأموال إلكترونيًا دون نقد ورقي وبحماية للبيانات.'],
+  ['🎯 خلاصة التفريق للطالب','شركة + شركة = B2B | شركة + فرد مستهلك (مسافر/طالب) = B2C.']
+ ]
+},
+supply:{
+ badge:'المشهد 3 من 4 (الفقرة 9 + سؤال 4/ج)',
+ title:'سلاسل التوريد الذكية: المنتج ⬅ الموزع ⬅ المستهلك',
+ desc:'نظام متكامل يربط المصنع المنتج بالموزع الوسيط ثم منزل المستهلك، مما يمنع التأخير وسوء التخزين ويجعل المستهلك شريكًا بتقييماته.',
+ cards:[
+  ['🏭 1. المُنتِجونَ (المصنع)','الجهات أو الأشخاص الذين يقومون بإنتاج السلع والخدمات.'],
+  ['🚚 2. الموزِّعونَ (الوسيط)','الوسيط المسؤول عن نقل البضائع وتوزيعها للأسواق دون سوء تخزين.'],
+  ['🏠 3. المستهلكونَ (المستفيد)','الأفراد المستفيدون من البضائع بعد وصولها لعناوينهم بسرعة.'],
+  ['⭐ المستهلك شريك فاعل','يرسل المستهلك آراءه وتقييماته عبر الشبكة فيسهم في تحسين السلع وتحديثها.']
+ ]
+},
+globe:{
+ badge:'المشهد 4 من 4 (الفقرتان 1 و 8)',
+ title:'الفضاء الرقمي الفسيح وإلغاء القيود الجغرافية',
+ desc:'الكرة الأرضية محاطة بشبكة رقمية تربط الموردين والمستهلكين والمكتبات في شتى أنحاء العالم بأقل الكلف ودون حدود مكانية.',
+ cards:[
+  ['🌍 تقليص المسافات','قصرت المسافات الجغرافية بين القارات بفضل التقدم التكنولوجي.'],
+  ['🧭 إلغاء القيود الجغرافية','تبحث الشركات عن الموردين وتصل للمستهلكين في شتى أنحاء العالم.'],
+  ['📚 الإبحار في الفضاء الرقمي','الباحث عن كتاب نادر يتنقل عبر الإنترنت ويحصل عليه وهو في منزله.'],
+  ['🌱 حماية البيئة وتقليل الورق','تُحفظ الوثائق والمعلومات إلكترونيًا بدلًا من الورق وتقل رحلات السفر.']
  ]
 }
 };
 
-let mode='compare',cnt=142,auto=true,rotY=-0.32,rotX=0.24,zoom=1.0,drag3d=false,px=0,py=0,pkts=[],hits=[];
+let mode='compare',cnt=142,auto=true,rotY=-0.28,rotX=0.22,zoom=1.0,drag3d=false,px=0,py=0,pkts=[],hits=[];
 
 function setMode(m){
  mode=m;
@@ -649,6 +913,7 @@ function setMode(m){
  $('#simT').textContent=info.title;
  $('#simD').textContent=info.desc;
  $('#simExpGrid').innerHTML=info.cards.map(c=>`<div class="sim-exp-item"><b class="d-block text-primary mb-1">${c[0]}</b><span>${c[1]}</span></div>`).join('');
+ $$('#simExpGrid .sim-exp-item').forEach(el=>el.onclick=()=>{spawnPkt(1);toast(el.textContent)});
 }
 
 function proj(x,y,z,cx,cy,sc){
@@ -681,11 +946,15 @@ function cube3d(ctx,cx,cy,sc,bx,by,bz,w,h,d,cTop,cFront,cSide,stroke){
  return proj(bx,by+hh,bz,cx,cy,sc);
 }
 
-function tag3d(ctx,x,y,txt,bg,bd,fg,fs=12.5){
- ctx.save();ctx.font=`bold ${fs}px Cairo,sans-serif`;
- const w=ctx.measureText(txt).width+22,h=fs+12,rx=x-w/2,ry=y-h/2;
- ctx.fillStyle=bg;ctx.strokeStyle=bd;ctx.lineWidth=1.8;
- ctx.beginPath();if(ctx.roundRect)ctx.roundRect(rx,ry,w,h,8);else ctx.rect(rx,ry,w,h);
+function tag3d(ctx,x,y,txt,bg,bd,fg,fs=12){
+ ctx.save();
+ const isMob=ctx.canvas.width<520;
+ const fontSz=isMob?Math.max(9.5,fs-2.2):fs;
+ ctx.font=`bold ${fontSz}px Cairo,sans-serif`;
+ const padX=isMob?7:11,padY=isMob?4:6;
+ const w=ctx.measureText(txt).width+padX*2,h=fontSz+padY*2,rx=x-w/2,ry=y-h/2;
+ ctx.fillStyle=bg;ctx.strokeStyle=bd;ctx.lineWidth=1.6;
+ ctx.beginPath();if(ctx.roundRect)ctx.roundRect(rx,ry,w,h,7);else ctx.rect(rx,ry,w,h);
  ctx.fill();ctx.stroke();
  ctx.fillStyle=fg;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(txt,x,y+1);
  ctx.restore();
@@ -693,138 +962,127 @@ function tag3d(ctx,x,y,txt,bg,bd,fg,fs=12.5){
 
 function init3DViewer(){
  const wrap=$('#wrap3d'),c=$('#c3d');
- const sync=()=>{const r=wrap.getBoundingClientRect();c.width=Math.max(320,r.width||800);c.height=Math.max(380,r.height||490)};
+ const sync=()=>{const r=wrap.getBoundingClientRect();c.width=Math.max(280,r.width||700);c.height=Math.max(250,r.height||340)};
  sync();addEventListener('resize',sync);
  let dx0=0,dy0=0;
  c.addEventListener('pointerdown',e=>{drag3d=true;px=dx0=e.clientX;py=dy0=e.clientY});
  addEventListener('pointerup',e=>{
-  if(drag3d&&Math.hypot(e.clientX-dx0,e.clientY-dy0)<6){
+  if(drag3d&&Math.hypot(e.clientX-dx0,e.clientY-dy0)<8){
    const r=c.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
    for(let i=hits.length-1;i>=0;i--){if(Math.hypot(mx-hits[i].x,my-hits[i].y)<=hits[i].r){toast(hits[i].msg);$('#simStatus').textContent=hits[i].msg;spawnPkt(1);break}}
   }
   drag3d=false;
  });
- addEventListener('pointermove',e=>{if(!drag3d)return;rotY+=(e.clientX-px)*.008;rotX=Math.max(-.7,Math.min(.8,rotX+(e.clientY-py)*.008));px=e.clientX;py=e.clientY});
- c.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.65,Math.min(1.6,zoom+(e.deltaY<0?.08:-.08)))},{passive:false});
+ addEventListener('pointermove',e=>{if(!drag3d)return;rotY+=(e.clientX-px)*.008;rotX=Math.max(-.65,Math.min(.75,rotX+(e.clientY-py)*.008));px=e.clientX;py=e.clientY});
 
  (function loop(){
   requestAnimationFrame(loop);
-  const ctx=c.getContext('2d'),w=c.width,h=c.height,cx=w/2,cy=h*.55,sc=Math.min(w,h)*.22,t=Date.now()*.0024;
-  if(auto&&!drag3d)rotY+=.0048;
+  const ctx=c.getContext('2d'),w=c.width,h=c.height,cx=w/2,cy=h*.54,sc=Math.min(w,h)*(w<520?.27:.25),t=Date.now()*.0024;
+  if(auto&&!drag3d)rotY+=.0042;
   hits=[];
 
-  // Background & Floor Grid
   const g=ctx.createRadialGradient(cx,cy*.8,20,cx,cy,Math.max(w,h)*.75);
   g.addColorStop(0,'#1e293b');g.addColorStop(1,'#060a12');
   ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
 
   ctx.strokeStyle='rgba(56,189,248,.13)';ctx.lineWidth=1;
   for(let i=-4;i<=4;i++){
-   const a=proj(i*1.15,-1.4,-4.6,cx,cy,sc),b=proj(i*1.15,-1.4,4.6,cx,cy,sc);
+   const a=proj(i*1.15,-1.35,-4.5,cx,cy,sc),b=proj(i*1.15,-1.35,4.5,cx,cy,sc);
    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
-   const p=proj(-4.6,-1.4,i*1.15,cx,cy,sc),q=proj(4.6,-1.4,i*1.15,cx,cy,sc);
+   const p=proj(-4.5,-1.35,i*1.15,cx,cy,sc),q=proj(4.5,-1.35,i*1.15,cx,cy,sc);
    ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();
   }
 
   if(mode==='globe'){
-   const ctr=proj(0,.2,0,cx,cy,sc),rad=Math.max(42,ctr.s*2.15);
+   const ctr=proj(0,.15,0,cx,cy,sc),rad=Math.max(36,ctr.s*2.05);
    const sg=ctx.createRadialGradient(ctr.x-rad*.3,ctr.y-rad*.3,rad*.1,ctr.x,ctr.y,rad);
    sg.addColorStop(0,'#0284c7');sg.addColorStop(.6,'#0f4c5c');sg.addColorStop(1,'#082f49');
    ctx.fillStyle=sg;ctx.beginPath();ctx.arc(ctr.x,ctr.y,rad,0,Math.PI*2);ctx.fill();
    ctx.strokeStyle='#38bdf8';ctx.lineWidth=2;ctx.stroke();
 
-   ctx.strokeStyle='rgba(56,189,248,.36)';ctx.lineWidth=1.1;
-   for(let lat=-60;lat<=60;lat+=30){
-    const rl=lat*Math.PI/180,r0=Math.cos(rl)*2.15,y0=.2+Math.sin(rl)*2.15;
-    ctx.beginPath();for(let a=0;a<=360;a+=15){const ra=a*Math.PI/180,p=proj(Math.cos(ra)*r0,y0,Math.sin(ra)*r0,cx,cy,sc);a?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)}ctx.stroke();
+   ctx.strokeStyle='rgba(56,189,248,.34)';ctx.lineWidth=1;
+   for(let lat=-45;lat<=45;lat+=45){
+    const rl=lat*Math.PI/180,r0=Math.cos(rl)*2.05,y0=.15+Math.sin(rl)*2.05;
+    ctx.beginPath();for(let a=0;a<=360;a+=20){const ra=a*Math.PI/180,p=proj(Math.cos(ra)*r0,y0,Math.sin(ra)*r0,cx,cy,sc);a?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)}ctx.stroke();
    }
    const nodes=[
-    [0,.7,'#f97316','موردون في شتى العالم','البحث عن الموردين في شتى أنحاء العالم بأقل الكلف (فقرة 8)'],
-    [1.6,-.5,'#22c55e','مستهلكون (بلا عناء تنقل)','الوصول إلى أعداد كبيرة من المستهلكين بسهولة (فقرة 8)'],
-    [3.1,.85,'#eab308','مكتبات رقمية (كتاب نادر)','الإبحار في الفضاء الرقمي للحصول على كتاب نادر من المنزل (فقرة 8)'],
-    [4.7,-.55,'#a855f7','حضور رقمي (1995م)','أنشأت الشركات الكبرى مواقع إلكترونية خاصة بها عام 1995م (فقرة 6)']
+    [0,.65,'#f97316','موردون عالميون','البحث عن الموردين في شتى أنحاء العالم بأقل الكلف (فقرة 8)'],
+    [1.6,-.5,'#22c55e','مستهلكون','الوصول إلى أعداد كبيرة من المستهلكين بسهولة (فقرة 8)'],
+    [3.1,.75,'#eab308','مكتبات رقمية','الإبحار في الفضاء الرقمي للحصول على كتاب نادر من المنزل (فقرة 8)'],
+    [4.7,-.5,'#a855f7','شركات (1995م)','أنشأت الشركات الكبرى مواقع إلكترونية خاصة بها عام 1995م (فقرة 6)']
    ];
    nodes.forEach(n=>{
-    const a=n[0]+t*.4,hx=Math.cos(a)*3.1,hz=Math.sin(a)*3.1,p=proj(hx,n[1],hz,cx,cy,sc);
+    const a=n[0]+t*.4,hx=Math.cos(a)*2.9,hz=Math.sin(a)*2.9,p=proj(hx,n[1],hz,cx,cy,sc);
     ctx.strokeStyle='rgba(251,191,36,.5)';ctx.beginPath();ctx.moveTo(ctr.x,ctr.y);ctx.lineTo(p.x,p.y);ctx.stroke();
-    cube3d(ctx,cx,cy,sc,hx,n[1],hz,.46,.46,.46,n[2],n[2],'#1e293b','#fff');
-    tag3d(ctx,p.x,p.y-25,n[3],'rgba(15,23,42,.92)',n[2],'#fff',12);
+    cube3d(ctx,cx,cy,sc,hx,n[1],hz,.44,.44,.44,n[2],n[2],'#1e293b','#fff');
+    tag3d(ctx,p.x,p.y-22,n[3],'rgba(15,23,42,.92)',n[2],'#fff',11.5);
     hits.push({x:p.x,y:p.y,r:40,msg:n[4]});
    });
-   const top=proj(0,2.75,0,cx,cy,sc);
-   tag3d(ctx,top.x,top.y,'🌐 الفضاء الرقمي الفسيح: إلغاء القيود الجغرافية وتقليص المسافات','rgba(12,74,110,.95)','#38bdf8','#fef08a',13.5);
   }
   else if(mode==='compare'){
-   // Traditional Alley (Left side of 3D space)
-   cube3d(ctx,cx,cy,sc,-2.65,-1.25,0,3.1,.24,2.6,'#d97706','#b45309','#78350f','#fcd34d');
-   cube3d(ctx,cx,cy,sc,-3.8,-.35,0,.35,1.6,2.4,'#b45309','#92400e','#78350f','#f59e0b');
-   cube3d(ctx,cx,cy,sc,-1.5,-.35,0,.35,1.6,2.4,'#b45309','#92400e','#78350f','#f59e0b');
-   cube3d(ctx,cx,cy,sc,-2.65,.65,0,2.65,.32,2.2,'#dc2626','#b91c1c','#991b1b','#fca5a5');
-   for(let i=0;i<5;i++){
-    const sx=-3.0+(i%2)*.7+Math.sin(t*2+i)*.22,sz=-.65+Math.cos(t*2.3+i*1.3)*.75;
-    cube3d(ctx,cx,cy,sc,sx,-.8,sz,.24,.55,.24,'#fef08a','#facc15','#ca8a04','#fff');
+   // Traditional Alley
+   cube3d(ctx,cx,cy,sc,-2.5,-1.2,0,2.9,.22,2.4,'#d97706','#b45309','#78350f','#fcd34d');
+   cube3d(ctx,cx,cy,sc,-3.55,-.35,0,.32,1.5,2.2,'#b45309','#92400e','#78350f','#f59e0b');
+   cube3d(ctx,cx,cy,sc,-1.45,-.35,0,.32,1.5,2.2,'#b45309','#92400e','#78350f','#f59e0b');
+   cube3d(ctx,cx,cy,sc,-2.5,.55,0,2.5,.3,2.0,'#dc2626','#b91c1c','#991b1b','#fca5a5');
+   for(let i=0;i<4;i++){
+    const sx=-2.8+(i%2)*.6+Math.sin(t*2+i)*.2,sz=-.55+Math.cos(t*2.3+i*1.3)*.65;
+    cube3d(ctx,cx,cy,sc,sx,-.8,sz,.22,.5,.22,'#fef08a','#facc15','#ca8a04','#fff');
    }
-   const pT=proj(-2.65,1.6,0,cx,cy,sc),pT2=proj(-2.65,-1.65,1.1,cx,cy,sc);
-   tag3d(ctx,pT.x,pT.y,'🏪 قديمًا: الأزقة والساحات (مكانٌ يُؤَمُّ)','rgba(120,53,15,.95)','#f59e0b','#fef3c7',13);
-   tag3d(ctx,pT2.x,pT2.y,'تعج بالحركة كخلية نحل + تقابل وجهًا لوجه','rgba(15,23,42,.9)','#f59e0b','#fff',11.5);
-   hits.push({x:pT.x,y:pT.y+40,r:60,msg:'السوق قديمًا: مكان مادي يُؤمّ تتعالى فيه نداءات البائعين وتتقاطع خطا المشترين.'});
+   const pT=proj(-2.5,1.45,0,cx,cy,sc);
+   tag3d(ctx,pT.x,pT.y,'🏪 قديمًا: الأزقة (مكانٌ يُؤَمُّ)','rgba(120,53,15,.95)','#f59e0b','#fef3c7',12);
+   hits.push({x:pT.x,y:pT.y+35,r:55,msg:'السوق قديمًا: مكان مادي يُؤمّ تتعالى فيه نداءات البائعين وتتقاطع خطا المشترين.'});
 
    // Bridge
-   cube3d(ctx,cx,cy,sc,0,-.45,0,2.2,.14,.35,'#fbbf24','#d97706','#b45309','#fff');
-   const pM=proj(0,.2,0,cx,cy,sc);
-   tag3d(ctx,pM.x,pM.y,'⚡ التقدم التقني ⬅','rgba(181,72,93,.95)','#fbbf24','#fff',12);
+   cube3d(ctx,cx,cy,sc,0,-.45,0,2.0,.14,.32,'#fbbf24','#d97706','#b45309','#fff');
 
-   // Digital Screen (Right side)
-   cube3d(ctx,cx,cy,sc,2.65,-1.25,0,1.6,.2,1.4,'#475569','#334155','#1e293b','#94a3b8');
-   cube3d(ctx,cx,cy,sc,2.65,-.8,0,.35,.7,.35,'#64748b','#475569','#334155','#cbd5e1');
-   cube3d(ctx,cx,cy,sc,2.65,.3,0,2.75,1.75,.25,'#38bdf8','#0284c7','#0369a1','#e0f2fe');
-   cube3d(ctx,cx,cy,sc,2.65,.2,.2,.85+Math.sin(t*3)*.07,.38,.16,'#4ade80','#16a34a','#15803d','#fff');
-   const pD=proj(2.65,1.6,0,cx,cy,sc),pD2=proj(2.65,-1.65,1.1,cx,cy,sc);
-   tag3d(ctx,pD.x,pD.y,'💻 اليوم: الشاشات النابضة (تجربةٌ تُعاشُ)','rgba(12,74,110,.95)','#38bdf8','#e0f2fe',13);
-   tag3d(ctx,pD2.x,pD2.y,'تنجز المعاملات بنقرة زر + دون لقاء مباشر','rgba(6,95,70,.92)','#34d399','#fff',11.5);
-   hits.push({x:pD.x,y:pD.y+40,r:60,msg:'الشاشات النابضة بالحياة: تنجز فيها المعاملات بنقرة زر (ضغطة سريعة) دون عناء التنقل!'});
+   // Digital Screen
+   cube3d(ctx,cx,cy,sc,2.5,-1.2,0,1.5,.2,1.3,'#475569','#334155','#1e293b','#94a3b8');
+   cube3d(ctx,cx,cy,sc,2.5,.25,0,2.55,1.65,.24,'#38bdf8','#0284c7','#0369a1','#e0f2fe');
+   cube3d(ctx,cx,cy,sc,2.5,.18,.18,.8+Math.sin(t*3)*.06,.35,.15,'#4ade80','#16a34a','#15803d','#fff');
+   const pD=proj(2.5,1.45,0,cx,cy,sc);
+   tag3d(ctx,pD.x,pD.y,'💻 اليوم: الشاشات (تجربةٌ تُعاشُ)','rgba(12,74,110,.95)','#38bdf8','#e0f2fe',12);
+   hits.push({x:pD.x,y:pD.y+35,r:55,msg:'الشاشات النابضة بالحياة: تنجز فيها المعاملات بنقرة زر (ضغطة سريعة) دون عناء التنقل!'});
   }
   else if(mode==='supply'){
-   cube3d(ctx,cx,cy,sc,0,-1.15,0,7.2,.16,.6,'#0284c7','#0369a1','#075985','#38bdf8');
+   cube3d(ctx,cx,cy,sc,0,-1.1,0,6.8,.15,.55,'#0284c7','#0369a1','#075985','#38bdf8');
    const hubs=[
-    [-3.0,1.8,'#60a5fa','#2563eb','#1d4ed8','1. المُنتِجونَ (المصنع)','إنتاج السلع والخدمات','المنتجون: الجهات أو الأشخاص الذين يقومون بإنتاج السلع والخدمات (الفقرة 9).'],
-    [0,1.5,'#fbbf24','#d97706','#b45309','2. الموزِّعونَ (الوسيط)','نقل وتوزيع بلا سوء تخزين','الموزعون: الوسيط المسؤول عن نقل البضائع وتوزيعها للأسواق ومنع سوء التخزين.'],
-    [3.0,1.4,'#34d399','#059669','#047857','3. المستهلكونَ (شريك فاعل)','استلام السلعة + تقييم وآراء','المستهلكون: المستفيدون من البضائع، وهم شريك فاعل بآرائهم وتقييماتهم.']
+    [-2.8,1.7,'#60a5fa','#2563eb','#1d4ed8','1. المُنتِجونَ','المنتجون: الجهات أو الأشخاص الذين يقومون بإنتاج السلع والخدمات (الفقرة 9).'],
+    [0,1.45,'#fbbf24','#d97706','#b45309','2. الموزِّعونَ','الموزعون: الوسيط المسؤول عن نقل البضائع وتوزيعها للأسواق ومنع سوء التخزين.'],
+    [2.8,1.35,'#34d399','#059669','#047857','3. المستهلكونَ','المستهلكون: المستفيدون من البضائع، وهم شريك فاعل بآرائهم وتقييماتهم.']
    ];
    hubs.forEach(h=>{
-    cube3d(ctx,cx,cy,sc,h[0],-1.15+h[1]/2,0,1.55,h[1],1.45,h[2],h[3],h[4],'#fff');
-    const pt=proj(h[0],-1.15+h[1]+.55,0,cx,cy,sc),pb=proj(h[0],-1.6,.9,cx,cy,sc);
-    tag3d(ctx,pt.x,pt.y,h[5],'rgba(15,23,42,.94)',h[2],'#fff',13);
-    tag3d(ctx,pb.x,pb.y,h[6],'rgba(15,23,42,.88)','#fbbf24','#fef08a',11.5);
-    hits.push({x:pt.x,y:pt.y+35,r:55,msg:h[7]});
+    cube3d(ctx,cx,cy,sc,h[0],-1.1+h[1]/2,0,1.45,h[1],1.35,h[2],h[3],h[4],'#fff');
+    const pt=proj(h[0],-1.1+h[1]+.5,0,cx,cy,sc);
+    tag3d(ctx,pt.x,pt.y,h[5],'rgba(15,23,42,.94)',h[2],'#fff',12);
+    hits.push({x:pt.x,y:pt.y+35,r:50,msg:h[6]});
    });
-   const fx=((t*.55)%1)*6-3;
-   cube3d(ctx,cx,cy,sc,fx,-.82,0,.38,.38,.38,'#fef08a','#eab308','#ca8a04','#fff');
+   const fx=((t*.55)%1)*5.6-2.8;
+   cube3d(ctx,cx,cy,sc,fx,-.78,0,.36,.36,.36,'#fef08a','#eab308','#ca8a04','#fff');
   }
   else{
-   cube3d(ctx,cx,cy,sc,-2.8,-.1,0,1.45,2.3,1.45,'#60a5fa','#2563eb','#1e40af','#93c5fd');
-   cube3d(ctx,cx,cy,sc,-.3,-.25,0,1.45,2.0,1.45,'#2dd4bf','#0d9488','#115e59','#5eead4');
-   cube3d(ctx,cx,cy,sc,-1.55,.1,0,1.2,.18,.18,'#a855f7','#9333ea','#7e22ce','#f3e8ff');
-   const b1=proj(-1.55,1.65,0,cx,cy,sc),b1s=proj(-1.55,-1.6,.9,cx,cy,sc);
-   tag3d(ctx,b1.x,b1.y,'🏢 الصورة (1): بين شركتين (B2B)','rgba(30,58,138,.95)','#60a5fa','#fff',13);
-   tag3d(ctx,b1s.x,b1s.y,'تتبادلان السلع والخدمات والوثائق عبر الشبكات','rgba(15,23,42,.9)','#60a5fa','#e0f2fe',11.5);
-   hits.push({x:b1.x,y:b1.y+40,r:60,msg:'التعامل بين شركتين (B2B): مثل تعاقد شركة حواسيب مع شركة برمجيات عبر موقع إلكتروني.'});
+   // B2B vs B2C 3D Scene
+   cube3d(ctx,cx,cy,sc,-2.7,-.1,0,1.35,2.2,1.35,'#60a5fa','#2563eb','#1e40af','#93c5fd');
+   cube3d(ctx,cx,cy,sc,-.35,-.25,0,1.35,1.9,1.35,'#2dd4bf','#0d9488','#115e59','#5eead4');
+   cube3d(ctx,cx,cy,sc,-1.5,.1,0,1.15,.16,.16,'#a855f7','#9333ea','#7e22ce','#f3e8ff');
+   const b1=proj(-1.5,1.55,0,cx,cy,sc);
+   tag3d(ctx,b1.x,b1.y,'🏢 بين شركتين (B2B)','rgba(30,58,138,.95)','#60a5fa','#fff',12);
+   hits.push({x:b1.x,y:b1.y+35,r:55,msg:'التعامل بين شركتين (B2B): مثل تعاقد شركة حواسيب مع شركة برمجيات عبر موقع إلكتروني.'});
 
-   cube3d(ctx,cx,cy,sc,2.8,-.55,0,1.5,1.4,1.4,'#fb923c','#ea580c','#9a3412','#fed7aa');
-   cube3d(ctx,cx,cy,sc,1.25,-.5,0,1.8,.15,.15,'#4ade80','#16a34a','#15803d','#dcfce7');
-   const b2=proj(2.15,1.35,0,cx,cy,sc),b2s=proj(2.15,-1.6,.9,cx,cy,sc);
-   tag3d(ctx,b2.x,b2.y,'🏠 الصورة (2): شركة ومستخدم (B2C - الأكثر شيوعًا)','rgba(6,95,70,.95)','#34d399','#fff',13);
-   tag3d(ctx,b2s.x,b2s.y,'دفع إلكتروني آمن + تسليم للعنوان دون عناء التنقل','rgba(15,23,42,.9)','#34d399','#dcfce7',11.5);
-   hits.push({x:b2.x,y:b2.y+40,r:60,msg:'التعامل بين شركة ومستخدم (B2C): الأكثر انتشارًا؛ يتم الدفع بأمان وتسلم السلعة للعنوان المحدد.'});
+   cube3d(ctx,cx,cy,sc,2.7,-.5,0,1.4,1.3,1.3,'#fb923c','#ea580c','#9a3412','#fed7aa');
+   cube3d(ctx,cx,cy,sc,1.2,-.45,0,1.7,.14,.14,'#4ade80','#16a34a','#15803d','#dcfce7');
+   const b2=proj(2.05,1.25,0,cx,cy,sc);
+   tag3d(ctx,b2.x,b2.y,'🏠 شركة ومستخدم (B2C الأكثر شيوعًا)','rgba(6,95,70,.95)','#34d399','#fff',12);
+   hits.push({x:b2.x,y:b2.y+35,r:55,msg:'التعامل بين شركة ومستخدم (B2C): الأكثر انتشارًا؛ يتم الدفع بأمان وتسلم السلعة للعنوان المحدد.'});
   }
 
   // Flying Order Packets
   for(let i=pkts.length-1;i>=0;i--){
    const p=pkts[i];p.p+=.018;
-   const x=-3+p.p*6,y=-.2+Math.sin(p.p*Math.PI)*1.75,z=Math.cos(p.p*Math.PI)*.7;
-   cube3d(ctx,cx,cy,sc,x,y,z,.42,.42,.42,'#fde047','#eab308','#ca8a04','#fff');
-   const pt=proj(x,y+.45,z,cx,cy,sc);
-   tag3d(ctx,pt.x,pt.y,'طلب إلكتروني 📦','rgba(22,101,52,.92)','#4ade80','#fff',11);
+   const x=-2.8+p.p*5.6,y=-.15+Math.sin(p.p*Math.PI)*1.6,z=Math.cos(p.p*Math.PI)*.6;
+   cube3d(ctx,cx,cy,sc,x,y,z,.4,.4,.4,'#fde047','#eab308','#ca8a04','#fff');
+   const pt=proj(x,y+.42,z,cx,cy,sc);
+   tag3d(ctx,pt.x,pt.y,'طرد إلكتروني 📦','rgba(22,101,52,.92)','#4ade80','#fff',10.5);
    if(p.p>=1){pkts.splice(i,1);$('#simStatus').textContent='تم تسليم السلعة للعنوان المحدد بنجاح ✓'}
   }
  })();
@@ -838,140 +1096,12 @@ function spawnPkt(n=1){
 $$('.mb').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
 $('#bRot').onclick=e=>{auto=!auto;e.target.textContent='تدوير تلقائي: '+(auto?'مفعل':'متوقف')};
 $('#bOrder').onclick=()=>{spawnPkt(1);toast('تم تنفيذ الصفقة بنقرة زر (ضغطة واحدة سريعة)!')};
-$('#bBurst').onclick=()=>{spawnPkt(4);toast('تم إطلاق تدفق شحنات عبر سلسلة التوريد الذكية!')};
-$('#camFront').onclick=()=>{rotY=-.32;rotX=.24;zoom=1};
-$('#camTop').onclick=()=>{rotX=.76;zoom=.95};
-$('#camIn').onclick=()=>{zoom=Math.min(1.6,zoom+.15)};
+$('#bBurst').onclick=()=>{setMode('supply');spawnPkt(3);toast('تم تشغيل سلسلة التوريد: من المنتج ⬅ الموزع ⬅ المستهلك!')};
+$('#camFront').onclick=()=>{rotY=-.28;rotX=.22;zoom=1};
+$('#camTop').onclick=()=>{rotX=.75;zoom=.95};
+$('#camIn').onclick=()=>{zoom=Math.min(1.55,zoom+.15)};
 $('#camOut').onclick=()=>{zoom=Math.max(.65,zoom-.15)};
 init3DViewer();
-
-/* ---------- UPGRADED SECTION 1: TRADITIONAL VS DIGITAL COMPARISON SIMULATOR ---------- */
-const SC=[
-{
- goal:'السيناريو (1): باحث يبحث عن كتاب نادر (الفقرة الثامنة - ص 63)',
- tq:'«كانَ الباحثُ عن كتابٍ نادرٍ مضطرًّا إلى السَّفرِ أوِ التَّنقُّلِ بينَ المكتباتِ في الأزقَّةِ والسّاحاتِ»',
- dq:'«فلمْ يعدِ الباحثُ عن كتابٍ نادرٍ مضطرًّا إلى السَّفرِ... بلْ يكفيهِ أنْ يُبحرَ في الفضاءِ الرَّقميِّ ليحصلَ على ما يريدُ وهوَ في منزلِهِ»',
- t:[
-  '1. الخروج من المنزل وتحمّل عناء التنقل (مشقة وتعب السفر) بين المدن والمكتبات.',
-  '2. البحث اليدوي الطويل في الرفوف الورقية المحدودة بنطاق جغرافي ضيق.',
-  '3. احتمالية عدم توفر النسخة النادرة والاضطرار للانتظار الطويل.',
-  '4. الدفع النقدي الورقي والعودة بالكتاب المادي بعد جهد ووقت كبيرين.'
- ],
- d:[
-  '1. الجلوس في المنزل والإبحار في الفضاء الرقمي (التنقل والبحث عبر شبكة الإنترنت).',
-  '2. كتابة عنوان الكتاب النادر في المواقع الرقمية المتنوعة والوصول إليه في ثوانٍ.',
-  '3. إتمام الشراء بنقرة زر (ضغطة واحدة سريعة) والدفع بوسائل إلكترونية آمنة.',
-  '4. تنزيل النسخة الرقمية فورًا أو استلام الكتاب على العنوان المحدد بأقل الكلف.'
- ],
- te:'95% (سفر وتنقل)',tp:'100% (ورقي ونقدي)',ts:'محدود بالمكتبات المحلية',tpay:'حضور جسدي + نقد ورقي',
- de:'5% (من المنزل)',ds:'100% (مكتبات العالم)',dscope:'فضاء رقمي فسيح بلا حدود',dpay:'دفع إلكتروني آمن بنقرة زر'
-},
-{
- goal:'السيناريو (2): مسافر يحجز تذكرة سفره (الفقرة السادسة ص 62 + سؤال 9 ص 67 - B2C)',
- tq:'«كانتِ المعاملاتُ التِّجاريَّةُ في الماضي تقومُ على التَّقابلِ وجهًا لوجهٍ والانتظارِ الطَّويلِ»',
- dq:'«فباتَ حجزُ تذاكرِ السَّفرِ، وإدارةُ الحساباتِ الماليَّةِ... يتمُّ في مواقعَ إلكترونيَّةٍ منظَّمةٍ»',
- t:[
-  '1. الذهاب شخصيًا إلى مكاتب السياحة والطيران في وسط المدينة المزدحمة.',
-  '2. الوقوف في طوابير الانتظار الطويل والمقابلة وجهًا لوجه مع الموظف.',
-  '3. مقارنة الأسعار يدويًا في مكتب واحد أو عدة مكاتب متباعدة.',
-  '4. دفع المبلغ نقدًا واستلام تذكرة ورقية مطبوعة قابلة للضياع.'
- ],
- d:[
-  '1. الدخول إلى موقع شركة الطيران الإلكتروني المنظّم (تعامل شركة ومستخدم B2C).',
-  '2. مقارنة الرحلات والأسعار في شتى أنحاء العالم بضغطة زر واحدة.',
-  '3. الدفع الإلكتروني الآمن (تحويل إلكتروني دون نقد ورقي).',
-  '4. حفظ التذكرة والوثائق إلكترونيًا على الهاتف بكلفة أقل وجهد أيسر.'
- ],
- te:'85% (حضور وانتظار)',tp:'90% (تذاكر ورقية)',ts:'مكاتب محلية محدودة',tpay:'مقابلة وجهًا لوجه',
- de:'10% (حجز فوري)',ds:'100% (شركات الطيران عالميًا)',dscope:'مواقع إلكترونية منظمة',dpay:'تحويل إلكتروني آمن (B2C)'
-},
-{
- goal:'السيناريو (3): شركة تبحث عن موردين لبضائعها عالميًا (الفقرتان 8 و9 - ص 63 - B2B)',
- tq:'«كانتِ السّوقُ محصورةً في حدودِ المكانِ والقيودِ الجغرافيَّةِ وضعفِ التَّواصلِ»',
- dq:'«صارتِ الشَّركاتُ قادرةً على البحثِ عنِ المورِّدينَ في شتّى أنحاءِ العالمِ بأقلِّ الكُلَفِ... وتحسينِ كفايةِ سلاسلِ التَّوريدِ»',
- t:[
-  '1. الاقتصار على الموردين المحليين القريبين بسبب القيود الجغرافية.',
-  '2. بطء تبادل الوثائق والمستندات والعقود الورقية عبر البريد التقليدي.',
-  '3. حدوث مشكلات التأخير وسوء التخزين (التخزين الخاطئ للبضائع).',
-  '4. ارتفاع الكلف المالية وما ينجم عنها من خسائر وفقدان الثقة بالمنتج.'
- ],
- d:[
-  '1. البحث عن أفضل الموردين في شتى (مختلف) أنحاء العالم عبر الشبكات (B2B).',
-  '2. تبادل الوثائق والمعلومات والبيانات إلكترونيًا بسرعة فائقة.',
-  '3. ربط المنتجين والموزعين والمستهلكين في سلسلة توريد عالية الكفاية.',
-  '4. تعزيز المنافسة وتحسين جودة المنتجات وتسريع الابتكار بأقل الكلف.'
- ],
- te:'90% (قيود ومخاطر تخزين)',tp:'95% (عقود ورقية)',ts:'موردون محليون فقط',tpay:'معاملات ورقية بطيئة',
- de:'12% (سلاسل توريد ذكية)',ds:'100% (موردون في شتى العالم)',dscope:'إلغاء القيود الجغرافية',dpay:'تبادل وثائق وتحويل إلكتروني (B2B)'
-},
-{
- goal:'السيناريو (4): مستهلك يشتري سلعة ويدفع ثمنها ويقيّمها (الفقرات 2 و3 و7 و9)',
- tq:'«تتعالى فيها نداءاتُ البائعينَ، وتتقاطعُ على أرضِها خُطا المشترينَ، ويتنقَّلُ النّاسُ بينَ السِّلعِ»',
- dq:'«غدَتِ الشّاشاتُ واجهاتٍ نابضةً بالحياةِ تُنجَزُ فيها المعاملاتُ بنقرةِ زِرٍّ... وتُسلَّمُ السِّلعُ إلى العنواناتِ المحدَّدةِ»',
- t:[
-  '1. قصد السوق المادي (مكان يُؤمّ) وسط الازدحام ونداءات البائعين.',
-  '2. المشي الطويل وتقاطع خطا المشترين بين الأزقة الضيقة والساحات.',
-  '3. المساومة المباشرة وجهًا لوجه ودفع النقود الورقية.',
-  '4. حمل الأكياس والسلع والعودة بها مع عناء التنقل.'
- ],
- d:[
-  '1. تصفح الشاشات النابضة بالحياة والاطلاع على آراء وتقييمات المستهلكين.',
-  '2. اختيار السلعة بنقرة زر (ضغطة سريعة) دون حاجة إلى اللقاء المباشر.',
-  '3. إتمام الدفع بوسائل إلكترونية آمنة مع حماية البيانات الشخصية والمالية.',
-  '4. توصيل السلعة إلى العنوان المحدد ومشاركة التقييم كشريك فاعل في التطوير.'
- ],
- te:'88% (ازدحام وتنقل جسدي)',tp:'90% (نقد وفواتير ورقية)',ts:'حدود الأزقة والساحات',tpay:'مصافحة باليد ونقد ورقي',
- de:'8% (تجربة ذكية تُعاش)',ds:'100% (متاجر متنوعة)',dscope:'شاشات نابضة بالحياة',dpay:'نقرة زر + توصيل للعنوان'
-}
-];
-
-let curStep=-1,runT;
-function highlightStep(idx){
- curStep=idx;
- $$('#tSteps .stp').forEach((e,j)=>e.classList.toggle('on',j===idx));
- $$('#dSteps .stp').forEach((e,j)=>e.classList.toggle('on',j===idx));
- if(idx>=0&&idx<4){
-  $('#scenStepIndicator').textContent=`مقارنة المرحلة (${idx+1} من 4): لاحظ الفرق بين عناء السوق المادي وسهولة الفضاء الرقمي`;
- }
-}
-
-function drawSteps(){
- const s=SC[$('#scen').value];
- $('#scenGoal').textContent=s.goal;
- $('#tQuote').textContent=s.tq;
- $('#dQuote').textContent=s.dq;
- $('#tEffortTxt').textContent=s.te;
- $('#tPaperTxt').textContent=s.tp;
- $('#tScopeTxt').textContent=s.ts;
- $('#tPayTxt').textContent=s.tpay;
- $('#dEffortTxt').textContent=s.de;
- $('#dScopeBarTxt').textContent=s.ds;
- $('#dScopeTxt').textContent=s.dscope;
- $('#dPayTxt').textContent=s.dpay;
-
- $('#tSteps').innerHTML=s.t.map((x,i)=>`<div class="stp" data-st="${i}"><span class="stp-num">${i+1}</span><span>${x.replace(/^\d+\.\s*/,'')}</span></div>`).join('');
- $('#dSteps').innerHTML=s.d.map((x,i)=>`<div class="stp" data-st="${i}"><span class="stp-num">${i+1}</span><span>${x.replace(/^\d+\.\s*/,'')}</span></div>`).join('');
- $$('#tSteps .stp, #dSteps .stp').forEach(el=>el.onclick=()=>highlightStep(+el.dataset.st));
- highlightStep(0);
-}
-
-function runSim(){
- clearInterval(runT);
- drawSteps();
- spawnPkt(2);
- let i=0;
- highlightStep(0);
- runT=setInterval(()=>{
-  i++;
-  if(i<4){highlightStep(i)}
-  else{clearInterval(runT);$('#scenStepIndicator').textContent='اكتملت المقارنة! اضغط على أي خطوة لمراجعتها بالتفصيل';toast('اكتملت محاكاة المقارنة بين التجارة التقليدية والرقمية!')}
- },1100);
-}
-
-$('#scen').onchange=()=>{clearInterval(runT);drawSteps()};
-$('#bRun').onclick=runSim;
-$('#bStepNext').onclick=()=>{clearInterval(runT);highlightStep((curStep+1)%4)};
-drawSteps();
 
 const KW={k1:'بيع وشراء السلع والخدمات عبر الإنترنت باستخدام الهواتف والمواقع بنقرة زر.',k2:'متى نشأت التجارة الإلكترونية؟ وما صورتاها الرئيستان؟ وما معوقاتها التقنية وغير التقنية؟',k3:'نشأت منذ 1970م بتحويل الأموال، ولها صورتان (B2B وB2C)، وتوسّع الأسواق وتخفض الورق وتحسّن سلاسل التوريد، وتتطلب موازنة بين التقنية والأمان.'};
 $('#bKwl').onclick=()=>{for(const k in KW)$('#'+k).value=KW[k];toast('تم إدراج إجابات نموذجية مقترحة في جدول التعلّم!')};
@@ -990,7 +1120,7 @@ document.addEventListener('click',e=>{
 let vf='all';
 function vList(){const q=$('#vSearch').value.trim();$('#vList').innerHTML=Object.keys(V).filter(k=>(vf=='all'||(vf=='book'?V[k][3]:!V[k][3]))&&(!q||V[k][0].includes(q)||V[k][1].includes(q)||V[k][2].includes(q))).map(k=>`<span class="vw ${V[k][3]?'':'ex'}" data-k="${k}">${V[k][0]}</span>`).join('')}
 $$('.vf').forEach(b=>b.onclick=()=>{vf=b.dataset.f;$$('.vf').forEach(x=>x.classList.toggle('active',x==b));vList()});$('#vSearch').oninput=vList;vList();
-let fs=1.4;$('#fInc').onclick=()=>{fs=Math.min(2.2,fs+.1);$('#sheet').style.fontSize=fs+'rem'};$('#fDec').onclick=()=>{fs=Math.max(1,fs-.1);$('#sheet').style.fontSize=fs+'rem'};
+let fs=1.38;$('#fInc').onclick=()=>{fs=Math.min(2.2,fs+.1);$('#sheet').style.fontSize=fs+'rem'};$('#fDec').onclick=()=>{fs=Math.max(1,fs-.1);$('#sheet').style.fontSize=fs+'rem'};
 $('#bHl').onclick=()=>$('#sheet').classList.toggle('hl-all');
 
 /* ---------- SECTION 3: 12 PARAGRAPHS ---------- */
@@ -1011,13 +1141,12 @@ $('#pNav').innerHTML=P.map((p,i)=>`<button class="pbtn" data-i="${i}">${i+1}. ${
 $$('.pbtn').forEach(b=>b.onclick=()=>showP(+b.dataset.i));
 $('#pPrev').onclick=()=>showP((cp+11)%12);$('#pNext').onclick=()=>showP((cp+1)%12);showP(0);
 
-/* ---------- SECTION 4: TIMELINE, B2B/B2C & OBSTACLES ---------- */
+/* ---------- SECTION 4: TIMELINE & OBSTACLES ---------- */
 const TL={1970:['1970م: البدايات الأولى','ظهر أول تطبيق لمفهوم التجارة الإلكترونية: تحويل الأموال إلكترونيًا من منظمة لأخرى، وكان محصورًا في المؤسسات والشركات المالية الكبيرة، ثم شمل إرسال الوثائق إلكترونيًا.'],1995:['1995م: مواقع الشركات الكبرى','أنشأت الشركات الكبرى مواقع إلكترونية خاصة بها بعد أن أدركت (فهمت ووعت) أهمية الحضور الرقمي (الوجود الفعلي والنشاط على شبكة الإنترنت).'],1999:['1999م: اتساع النطاق','اتسعت التجارة الإلكترونية لتشمل التبادل بين المؤسسات (B2B)، والتعامل المباشر مع المستهلكين (B2C).'],2001:['2001م: داخل المؤسسة الواحدة','امتدت لتشمل العلاقات بين الإدارات والموظفين داخل المؤسسة الواحدة (الشركة أو المنظمة الفردية).']};
 $('#tlRow').innerHTML=Object.keys(TL).map((y,i)=>`<div class="col-6 col-md-3"><div class="tl ${i?'':'active'}" data-y="${y}"><span class="badge bg-primary">${y}م</span><h6 class="fw-bold mt-1 mb-0">${TL[y][0]}</h6></div></div>`).join('');
 function showTL(y){$$('.tl').forEach(t=>t.classList.toggle('active',t.dataset.y==y));$('#tlDet').innerHTML=`<h5 class="fw-bold">${TL[y][0]}</h5><p class="mb-0 fw-semibold">${TL[y][1]}</p>`}
 $$('.tl').forEach(t=>t.onclick=()=>showTL(t.dataset.y));showTL(1970);
-const B2=['تعامل بين شركة ومستخدم (B2C): المسافر فرد يشتري الخدمة لنفسه من موقع الشركة.','تعامل بين شركتين (B2B): شركة حاسوب وشركة برمجيات تتبادلان السلع والخدمات عبر الشبكات.','تعامل بين شركة ومستخدم (B2C): الطالب فرد يشتري من متجر ويصله الكتاب لمنزله دون عناء التنقل.','تعامل بين شركتين (B2B): سلسلة المتاجر والمصنع مؤسستان ضمن سلاسل التوريد.'];
-$('#b2bSel').onchange=()=>$('#b2bRes').textContent='التحليل: '+B2[$('#b2bSel').value];$('#b2bSel').onchange();
+
 const OB=[
  ['أ- ضعف كفاية شبكات الاتصالات',1],
  ['ب- قلة الثقة بالبائع الافتراضي',0],
@@ -1026,7 +1155,7 @@ const OB=[
  ['هـ- التردد في اعتماد التعامل الرقمي',0],
  ['و- الخوف من طرائق الاحتيال الإلكتروني والقلق بشأن الخصوصية',0]
 ];
-function obs(){$('#obs').innerHTML=OB.map((o,i)=>`<div class="d-flex justify-content-between align-items-center border rounded p-2 mb-2" data-i="${i}"><span class="small fw-bold">${o[0]}</span><span class="text-nowrap"><button class="btn btn-sm btn-outline-primary ob" data-v="1">تقني</button> <button class="btn btn-sm btn-outline-secondary ob" data-v="0">غير تقني</button></span></div>`).join('')}
+function obs(){$('#obs').innerHTML=OB.map((o,i)=>`<div class="d-flex justify-content-between align-items-center border rounded p-2 mb-2 flex-wrap gap-2" data-i="${i}"><span class="small fw-bold">${o[0]}</span><span class="text-nowrap"><button class="btn btn-sm btn-outline-primary ob" data-v="1">تقني</button> <button class="btn btn-sm btn-outline-secondary ob" data-v="0">غير تقني</button></span></div>`).join('')}
 obs();$('#bObsReset').onclick=obs;
 document.addEventListener('click',e=>{const b=e.target.closest('.ob');if(!b)return;const row=b.closest('[data-i]'),ok=OB[row.dataset.i][1]==+b.dataset.v;row.style.background=ok?'#dcfce7':'#fee2e2';row.style.color='#1e293b';toast(ok?'إجابة صحيحة ✔':'حاول مرة أخرى ✘')});
 
